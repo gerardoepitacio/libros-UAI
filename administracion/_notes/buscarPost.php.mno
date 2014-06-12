@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_posts" value="name:idcomentario;datatype:int,name:idpublicacion;datatype:int,name:fecha;datatype:date,name:contenido;datatype:string,name:idusuario;datatype:int" />
+</info>

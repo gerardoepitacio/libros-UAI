@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_blog" value="name:idpublicacion;datatype:int,name:idlectura;datatype:int,name:fecha;datatype:date,name:contenido;datatype:string,name:titulo;datatype:string,name:hora;datatype:timestamp" />
+	<infoitem key="UD_contenidoblog" value="name:idpublicacion;datatype:int,name:idlectura;datatype:int,name:fecha;datatype:date,name:contenido;datatype:string,name:titulo;datatype:string,name:hora;datatype:timestamp" />
+</info>
