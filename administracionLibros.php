@@ -54,21 +54,7 @@ $totalRows_librosUsuario = mysql_num_rows($librosUsuario);
 	
 		<!-- CSS -->
 		<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
-		<!--[if IE 6]>
-			<link rel="stylesheet" type="text/css" media="screen" href="css/ie-hacks.css" />
-			<script type="text/javascript" src="js/DD_belatedPNG.js"></script>
-			<script>
-	      		/* EXAMPLE */
-	      		DD_belatedPNG.fix('*');
-	    	</script>
-		<![endif]-->
-		<!--[if IE 7]>
-			<link rel="stylesheet" href="css/ie7-hacks.css" type="text/css" media="screen" />
-		<![endif]-->
-		<!--[if IE 8]>
-			<link rel="stylesheet" href="css/ie8-hacks.css" type="text/css" media="screen" />
-		<![endif]-->
-		<!-- ENDS CSS -->
+		
 		
 		<!-- prettyPhoto -->
 		<link rel="stylesheet" href="js/prettyPhoto/css/prettyPhoto.css" type="text/css" media="screen" />
@@ -145,7 +131,12 @@ $totalRows_librosUsuario = mysql_num_rows($librosUsuario);
 						</ul>
 						</li>
 						
-						<li ><a href="blogs.php">BLOG</a></li>
+						<li ><a href="blogs.php">BLOG</a>
+						<ul>
+								<li><a href="agregarBlog.php">Nuevo</a></li>
+								<li><a href="blogs.php">Administrar</a></li>																
+						</ul>
+						</li>
 						<li><a href="staff.html">CUENTA</a>
 						<ul>
 								<li><a href="#">Configuracion</a></li>

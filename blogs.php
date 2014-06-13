@@ -46,25 +46,11 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		
-		<title>SIMPLE</title>
+		<title>LIBROS UAI</title>
 			
 		<!-- CSS -->
 		<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
-		<!--[if IE 6]>
-			<link rel="stylesheet" type="text/css" media="screen" href="css/ie-hacks.css" />
-			<script type="text/javascript" src="js/DD_belatedPNG.js"></script>
-			<script>
-	      		/* EXAMPLE */
-	      		DD_belatedPNG.fix('*');
-	    	</script>
-		<![endif]-->
-		<!--[if IE 7]>
-			<link rel="stylesheet" href="css/ie7-hacks.css" type="text/css" media="screen" />
-		<![endif]-->
-		<!--[if IE 8]>
-			<link rel="stylesheet" href="css/ie8-hacks.css" type="text/css" media="screen" />
-		<![endif]-->
-		<!-- ENDS CSS -->
+		
 		
 		<!-- prettyPhoto -->
 		<link rel="stylesheet" href="js/prettyPhoto/css/prettyPhoto.css" type="text/css" media="screen" />
@@ -148,7 +134,14 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 						</ul>
 						</li>
 						
-						<li class="current_page_item"><a href="blogs.php">BLOG</a></li>
+						<li class="current_page_item"><a href="blogs.php">BLOG</a>
+						<ul>
+								<li><a href="agregarBlog.php">Nuevo</a></li>
+								<li><a href="blogs.php">Administrar</a></li>																
+						</ul>
+						
+						
+						</li>
 						
 						<li><a href="staff.html">CUENTA</a></li>
 						<ul>
@@ -200,7 +193,8 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 							<div class="post">
 								<!-- post-header -->
 								<div class="post-header">
-									<div class="post-title"><a href="singleBlog.php?idpublicacion=<?php echo $row_publicacion['idpublicacion'];?>" > 
+									<div class="post-title">
+									<a href="singleBlog.php?idpublicacion=<?php echo $row_publicacion['idpublicacion'];?>" > 
 									
 									<?php 
 									
@@ -225,10 +219,16 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 									 <?php echo substr($row_publicacion['contenido'],0,300).". . ."; ?> 
 							  </div>
 									<p>
-									<a href="singleBlog.php" >
+									
+									<a href="eliminarRegistro.php?idpublicacion=<?php echo $row_publicacion['idpublicacion'];?>" 
+									class="link-button right" style="color:#FF4F4F" ><span> Eliminar </span></a>
+
+									<a href="editarBlog.php?idpublicacion=<?php echo $row_publicacion['idpublicacion'];?>" 
+									class="link-button right"><span> Editar </span></a>
+									
 									<a href="singleBlog.php?idpublicacion=<?php echo $row_publicacion['idpublicacion'];?>" 
 									class="link-button right">
-									<span>Ver </span></a></p>
+									<span>Ver </span>									</a></p>
 							</div>
 							<!-- ENDS post -->
 
@@ -261,8 +261,7 @@ else{
 							<li>
 								<h2 class="custom"><span>CATEGORIES</span></h2>		
 								<ul>
-									<li class="cat-item"><a href="#" title="View all posts filed under Design">Nuevo</a></li>
-									<li class="cat-item"><a href="#" title="View all posts filed under Design">Administrar</a></li>
+									<li class="cat-item"><a href="agregarBlog.php" title="Escribe un nuevo blog!">Nuevo</a></li>
 								</ul>
 							</li>	
 							<!-- ENDS init sidebar -->

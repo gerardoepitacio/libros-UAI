@@ -1,6 +1,7 @@
-						
 <?php require_once('Connections/coneccion.php'); ?>
 <?php
+
+
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
   $theValue = (!get_magic_quotes_gpc()) ? addslashes($theValue) : $theValue;
@@ -31,51 +32,38 @@ if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
-if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form2")) {
-  $insertSQL = sprintf("INSERT INTO autor (nombre, nacionalidad, nacimiento, fallecimiento) VALUES (%s, %s, %s, %s)",
-                       GetSQLValueString($_POST['nombre'], "text"),
-                       GetSQLValueString($_POST['nacionalidad'], "text"),
-                       GetSQLValueString($_POST['nacimiento'], "date"),
-                       GetSQLValueString($_POST['fallecimiento'], "date"));
+
+if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
+  $insertSQL = sprintf("INSERT INTO publicacion (idlectura, titulo, contenido) VALUES (%s, %s, %s)",
+                       GetSQLValueString($_POST['idlectura'], "int"),
+                       GetSQLValueString($_POST['titulo'], "text"),
+                       GetSQLValueString($_POST['contenido'], "text"));
 
   mysql_select_db($database_coneccion, $coneccion);
   $Result1 = mysql_query($insertSQL, $coneccion) or die(mysql_error());
 
-  $insertGoTo = "/template/simple/home.php";
+  $insertGoTo = "blogs.php";
   if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     $insertGoTo .= $_SERVER['QUERY_STRING'];
   }
   header(sprintf("Location: %s", $insertGoTo));
 }
+
+
 ?>
 
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">  
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	
-		<title>SIMPLE</title>
-			
-		<!-- CSS -->
+<title>LIBROS UAI</title>
+
+<!-- CSS -->
 		<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
-		<!--[if IE 6]>
-			<link rel="stylesheet" type="text/css" media="screen" href="css/ie-hacks.css" />
-			<script type="text/javascript" src="js/DD_belatedPNG.js"></script>
-			<script>
-	      		/* EXAMPLE */
-	      		DD_belatedPNG.fix('*');
-	    	</script>
-		<![endif]-->
-		<!--[if IE 7]>
-			<link rel="stylesheet" href="css/ie7-hacks.css" type="text/css" media="screen" />
-		<![endif]-->
-		<!--[if IE 8]>
-			<link rel="stylesheet" href="css/ie8-hacks.css" type="text/css" media="screen" />
-		<![endif]-->
-		<!-- ENDS CSS -->
+		
 		
 		<!-- prettyPhoto -->
 		<link rel="stylesheet" href="js/prettyPhoto/css/prettyPhoto.css" type="text/css" media="screen" />
@@ -107,22 +95,20 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form2")) {
 		
 		<!-- tabs -->
         <link rel="stylesheet" href="css/jquery.tabs.css" type="text/css" media="print, projection, screen" />
-        <!-- Additional IE/Win specific style sheet (Conditional Comments) -->
-        <!--[if lte IE 7]>
-        <link rel="stylesheet" href="css/jquery.tabs-ie.css" type="text/css" media="projection, screen">
-        <![endif]-->
-  		<!-- ENDS tabs -->
-		
-	</head>
-	
-	
-	<body>
+       
+
+
+
+
+</head>
+<body>
+
 
 		<!-- HEADER -->
 		<div id="header">
 		<div class="degree">
 			<div class="wrapper">
-				<a href="home.php"><img src="img/logo.png" alt="Logo" id="logo" /></a>
+				<a href="index.html"><img src="img/logo.png" alt="Logo" id="logo" /></a>
 		
 				<!-- search -->
 				<div class="top-search">
@@ -135,18 +121,18 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form2")) {
 				</div>
 				<!-- ENDS search -->
 				
-				
+					
 				<!-- navigation -->
 				<div id="nav-holder">
 					<ul id="nav" class="sf-menu">
-						<li><a href="home.php">HOME</a>
+						<li ><a href="home.php">HOME</a>
 							<ul>
 								<li><a href="index-3d.html">algun item</a></li>
 							</ul>
 						</li>
 				
 
-						<li  class="current_page_item"><a href="libros.php">MIS LIBROS</a>
+						<li  ><a href="libros.php">MIS LIBROS</a>
 						<ul>
 								<li><a href="administracionLibros.php">Administrar</a></li>								
 						</ul>
@@ -158,13 +144,15 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form2")) {
 						</ul>
 						</li>
 						
-						<li ><a href="blogs.php">BLOG</a>
+						<li class="current_page_item"><a href="blogs.php">BLOG</a>
 						<ul>
 								<li><a href="agregarBlog.php">Nuevo</a></li>
 								<li><a href="blogs.php">Administrar</a></li>																
 						</ul>
+						
 						</li>
-						<li><a href="staff.html">CUENTA</a>
+						
+						<li><a href="staff.html">CUENTA</a></li>
 						<ul>
 								<li><a href="#">Configuracion</a></li>
 								<li><a href="index.php"> Salir</a></li>
@@ -174,88 +162,44 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form2")) {
 				</div>
 				<!-- ENDS navigation -->
 			
-			
 			</div>
 			<!-- ENDS HEADER-wrapper -->
 		</div>
 		</div>
 		<!-- ENDS HEADER -->
-			
-		<!-- MAIN -->
+		
+		
 		<div id="main">
 			<!-- wrapper -->
 			<div class="wrapper">
-				<!-- content -->
-				<div class="content">
-					<!-- title -->
-					<div class="title-holder">
-						<span class="title">Autor</span>
-						<span class="subtitle">Podemos agregar a un nuevo autor  .</span>
-					</div>
-					<!-- ENDS title -->
-					
-					<!-- page-content -->
-					<div class="page-content">
-					
-						<!-- 2 cols -->
-						<div class="one-half">
-							<h4>Agregar a un Nuevo Autor 
-							  <!-- form -->
-							  <script type="text/javascript" src="js/form-validation.js"></script>
-</h4>
-							<form id="form1" name="form1" method="post" action="">
-  
-</form>
+			
+			
 
-<form method="post" name="form2" action="<?php echo $editFormAction; ?>">
-  <table align="center">
+<form method="post" name="form1" action="<?php echo $editFormAction; ?>">
+  <table width="788" height="200" align="center">
     <tr valign="baseline">
-      <td nowrap align="right">Nombre:</td>
-      <td><input type="text" name="nombre" value="" size="32"></td>
+      <td nowrap align="right">Idlectura:</td>
+      <td><input type="text" name="idlectura" value="" size="100"></td>
     </tr>
     <tr valign="baseline">
-      <td nowrap align="right">Nacionalidad:</td>
-      <td><input type="text" name="nacionalidad" value="" size="32"></td>
+      <td nowrap align="right">Titulo:</td>
+      <td><input type="text" name="titulo" value="" size="100"></td>
     </tr>
     <tr valign="baseline">
-      <td nowrap align="right">Nacimiento:</td>
-      <td><input type="text" name="nacimiento" value="" size="32"></td>
+      <td nowrap align="right" valign="top">Contenido:</td>
+      <td><textarea name="contenido" cols="100" rows="40" wrap="physical"></textarea>
+      </td>
     </tr>
     <tr valign="baseline">
-      <td nowrap align="right">Fallecimiento:</td>
-      <td><input type="text" name="fallecimiento" value="" size="32"></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap align="right">&nbsp;</td>
+      <td height="28" align="right" nowrap>&nbsp;</td>
       <td><input type="submit" value="Insertar registro"></td>
     </tr>
   </table>
-  <input type="hidden" name="MM_insert" value="form2">
+  <input type="hidden" name="MM_insert" value="form1">
 </form>
+<p>&nbsp;</p>
 
-							
-							
-							<p id="success" class="success">Thanks for your comments.</p>
-							<!-- ENDS form -->
-		
-						</div>
-						<div class="clear "></div>
-						<!-- ENDS 2 cols -->
-
-					</div>
-					<!-- ENDS page-content -->
-
-						
-				</div>
-				<!-- ENDS content -->
-				
-				<!-- twitter -->
-				<div class="twitter-reader">
-					<script>Chirp({user:"ansimuz",max:1})</script></div>
-		  </div>
-				<!-- ENDS twitter -->
-				
-	</div>
+</div>
 			<!-- ENDS main-wrapper -->
 			
 		
@@ -266,40 +210,12 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form2")) {
 		<div id="footer">
 		<div class="degree">
 			<!-- wrapper -->
-			<div class="wrapper">
-				<!-- social bar -->
-				<div id="social-bar">
-					
-					<ul class="follow-us">
-						<li><span>FOLLOW US</span></li>
-						<li ><a href="#" class="icon-32 twitter-32 social-tooltip" title="Follow our tweets">link</a></li>
-						<li ><a href="#" class="icon-32 vimeo-32 social-tooltip" title="Lorem ipsum dolor">link</a></li>
-						<li ><a href="#" class="icon-32 dribbble-32 social-tooltip" title="Lorem ipsum dolor">link</a></li>
-						<li ><a href="#" class="icon-32 flickr-32 social-tooltip" title="Lorem ipsum dolor">link</a></li>
-						<li ><a href="#" class="icon-32 facebook-32 social-tooltip" title="Lorem ipsum dolor">link</a></li>
-
-					</ul>
-				</div>
-				<!-- ENDS social bar -->
-                <!-- footer-cols -->
-                <!-- ENDS footer-cols -->
-            </div>
 			<!-- ENDS footer-wrapper -->
-		</div>
+</div>
 		</div>
 		<!-- ENDS FOOTER -->
 
 
-		<!-- BOTTOM -->
-		<div id="bottom">
-			<!-- wrapper -->
-			<!-- ENDS bottom-wrapper -->
-</div>
-		<!-- ENDS BOTTOM -->
 
-		<!-- start cufon -->
-		<script type="text/javascript"> Cufon.now(); </script>
-		<!-- ENDS start cufon -->
-	
-	</body>
+</body>
 </html>

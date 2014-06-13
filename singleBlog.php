@@ -12,19 +12,19 @@ echo "The current character set is: $charset\n";
  header('Location: index.php');
  } // Recuerda usar corchetes
 
+$editFormAction = $_SERVER['PHP_SELF'];
+
 
 $colname_contenidoblog = "-1";
+$contenidoblog = " ";
+$row_contenidoblog = " ";
+$totalRows = " ";
 //if (isset($_GET['idpublicacion'])) {
 if ((isset($_GET['idpublicacion'])) && ($_GET['idpublicacion'] != "")) {
 
-  $colname_contenidoblog = (get_magic_quotes_gpc()) ? $_GET['idpublicacion'] : addslashes($_GET['idpublicacion']);
+$colname_contenidoblog = (get_magic_quotes_gpc()) ? $_GET['idpublicacion'] : addslashes($_GET['idpublicacion']);
 mysql_select_db($database_coneccion, $coneccion);
 mysql_query("SET NAMES 'utf8'");
-
-	
-}
-
-
 $query_contenidoblog = sprintf("SELECT * FROM publicacion WHERE idpublicacion = %s", $colname_contenidoblog);
 
 $sql = "select \n"
@@ -43,7 +43,14 @@ $sql = "select \n"
 
 $contenidoblog = mysql_query($sql, $coneccion) or die(mysql_error());
 $row_contenidoblog = mysql_fetch_assoc($contenidoblog);
-$totalRows_contenidoblog = mysql_num_rows($contenidoblog);
+$totalRows = mysql_num_rows($contenidoblog);
+}
+
+if ((isset($_POST['commentID']))  && ($_POST['commentID'] != "")){
+echo 'este es un nuevo comentario';
+inset(_POST['commentID']);
+
+}
 
 
 ?>
@@ -59,21 +66,7 @@ $totalRows_contenidoblog = mysql_num_rows($contenidoblog);
 			
 		<!-- CSS -->
 		<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
-		<!--[if IE 6]>
-			<link rel="stylesheet" type="text/css" media="screen" href="css/ie-hacks.css" />
-			<script type="text/javascript" src="js/DD_belatedPNG.js"></script>
-			<script>
-	      		/* EXAMPLE */
-	      		DD_belatedPNG.fix('*');
-	    	</script>
-		<![endif]-->
-		<!--[if IE 7]>
-			<link rel="stylesheet" href="css/ie7-hacks.css" type="text/css" media="screen" />
-		<![endif]-->
-		<!--[if IE 8]>
-			<link rel="stylesheet" href="css/ie8-hacks.css" type="text/css" media="screen" />
-		<![endif]-->
-		<!-- ENDS CSS -->
+		
 		
 		<!-- prettyPhoto -->
 		<link rel="stylesheet" href="js/prettyPhoto/css/prettyPhoto.css" type="text/css" media="screen" />
@@ -156,8 +149,13 @@ $totalRows_contenidoblog = mysql_num_rows($contenidoblog);
 						</ul>
 						</li>
 						
-						<li class="current_page_item"><a href="blogs.php">BLOG</a></li>
-						<li><a href="staff.html">CUENTA <h>:<?php echo $_SESSION['idusuario'];?><></a>
+						<li class="current_page_item"><a href="blogs.php">BLOG</a>
+						<ul>
+								<li><a href="agregarBlog.php">Nuevo</a></li>
+								<li><a href="blogs.php">Administrar</a></li>																
+						</ul>
+						</li>
+						<li><a href="staff.html">CUENTA</a>
 						<ul>
 								<li><a href="#">Configuracion</a></li>
 								<li><a href="index.php"> Salir</a></li>
@@ -188,16 +186,24 @@ $totalRows_contenidoblog = mysql_num_rows($contenidoblog);
 								<div class="post-header single">
 									<div class="post-title"><a href="singleBlog.php" ><?php echo $row_contenidoblog['tPublicacion'];?> </a></div>
 									<div class="post-meta">
-										<?php echo $row_contenidoblog['titulo']; ?> 
-										POSTED BY <a href="#"> <?php echo $row_contenidoblog['nombre']; ?>
-										 </a> en <a href="#"> <?php echo $row_contenidoblog['hora']; ?> </a>
+										<?php 
+										if($totalRows!=0)
+										echo $row_contenidoblog['titulo']; ?> 
+										POSTED BY <a href="#"> <?php 
+										if($totalRows!=0)
+										echo $row_contenidoblog['nombre']; ?>
+										 </a> en <a href="#"> <?php 
+										 if($totalRows!=0)
+										 echo $row_contenidoblog['hora']; ?> </a>
 									</div>
 								</div>
 								<!-- ENDS post-header -->
 								
 								<!-- post-content -->								
 						 		<div style=" text-align:justify">
-						 		 <?php echo $row_contenidoblog['contenido']; ?>
+						 		 <?php 
+								 if($totalRows!=0)
+								 echo $row_contenidoblog['contenido']; ?>
 							  </div>
 								<!-- ENDS post-content -->
 								
@@ -265,14 +271,15 @@ $totalRows_contenidoblog = mysql_num_rows($contenidoblog);
 								<div class="leave-comment">
 								<p>
 								  <h3>Comentar</h3>	
-									<form action="" method="post" id="commentform">
+									<form action="<?php echo $editFormAction; ?>" method="post" id="commentform">
 										<fieldset>
 										<p>&nbsp;</p>
 											<p>
 											  <textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"></textarea>
 											</p>
-											<p><input type="submit" name="submit" id="submit" tabindex="5" value="SEND" /></p>
-											<p><input type="hidden" name="comment_post_ID" value="51" /></p>
+											<p><input type="submit" name="submit" id="submit" tabindex="5" value="SEND" onclick="<?php 
+											$comentario = true;?>"/></p>
+											<p><input type="hidden" name="commentID" value="true" /></p>
 										</fieldset>
 									</form>
 								</div>

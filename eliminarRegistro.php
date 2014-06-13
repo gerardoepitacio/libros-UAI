@@ -39,6 +39,21 @@ if ((isset($_GET['idlibro'])) && ($_GET['idlibro'] != "")) {
   }
   header(sprintf("Location: %s", $deleteGoTo));
 }
+
+if ((isset($_GET['idpublicacion'])) && ($_GET['idpublicacion'] != "")) {
+  $deleteSQL = sprintf("DELETE FROM publicacion WHERE idpublicacion=%s",
+                       GetSQLValueString($_GET['idpublicacion'], "int"));
+
+  mysql_select_db($database_coneccion, $coneccion);
+  $Result1 = mysql_query($deleteSQL, $coneccion) or die(mysql_error());
+
+  $deleteGoTo = "blogs.php";
+  if (isset($_SERVER['QUERY_STRING'])) {
+    $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
+    $deleteGoTo .= $_SERVER['QUERY_STRING'];
+  }
+  header(sprintf("Location: %s", $deleteGoTo));
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">

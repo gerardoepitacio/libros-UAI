@@ -125,8 +125,14 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 						</ul>
 						</li>
 						
-						<li ><a href="blog.php">BLOG</a></li>
-						<li><a href="staff.html">CUENTA <h>:<?php echo $_SESSION['idusuario'];?><></a>
+						<li ><a href="blogs.php">BLOG</a>
+						<ul>
+								<li><a href="agregarBlog.php">Nuevo</a></li>
+								<li><a href="blogs.php">Administrar</a></li>																
+						</ul>
+						</li>
+						
+						<li><a href="staff.html">CUENTA <h></a>
 						<ul>
 								<li><a href="#">Configuracion</a></li>
 								<li><a href="index.php"> Salir</a></li>
@@ -164,24 +170,45 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 							
 							<?php do{?>
 							<li>
-								<div class="news-title">
-								<a href="#">
-								<?php echo $row_publicacion['nombre']; ?> Comenta <?php echo $row_publicacion['titulo']; ?></a></div>
-							</li>
-				            <li>
-								<div class="news-title">
-								<a href="#">
-								<?php echo $row_publicacion['tPublicacion']; ?></a></div>
 							
+							<div class="news-title">
+								<a href="singleBlog.php?idpublicacion=<?php echo $row_publicacion['idpublicacion'];?>" >
+								<h5><?php echo $row_publicacion['tPublicacion']; ?> </h5>
+								</a></div>
+
+								<a href="singleBlog.php?idpublicacion=<?php echo $row_publicacion['idpublicacion'];?>" > 
+								<div class="news-title">
+							<?php echo $row_publicacion['nombre']; ?>  /  <?php echo $row_publicacion['titulo']; ?> 
+
+								</div>
+								</a>							
 							</li>
+				          
 			              <li>
+						  
 				            <div class="news-brief">
-					         <p style="text-align:justify"> <?php echo  $row_publicacion['contenido']; ?>	</p>						    
+					         <p style="text-align:justify"> <?php echo  substr($row_publicacion['contenido'],0,300)."<h1>. . .<h1>"; ?></p>						    
 							  </div>
+							  
 						    <div class="news-date">
-						      <?php echo $row_publicacion['hora']; ?>							    </div>
+						      <?php 
+							  $sqlComents = "select count(*) as total from comentarios where idpublicacion = ".$row_publicacion['idpublicacion']."\n";
+								$comentarios = mysql_query($sqlComents, $coneccion) or die(mysql_error());
+								$resultado = '-1';
+						
+								if($numComents = mysql_fetch_assoc($comentarios)){
+								$resultado = $numComents['total'] ;
+								}
+							  echo $row_publicacion['hora']; 
+								echo "<p style= align=\"left\">" .  $resultado ." Comentarios </p>"; 							  
+									  
+							  ?>
+							 
+							   </div>
 						  </li>
-							<?php } while ($row_publicacion = mysql_fetch_assoc($publicaciones)); ?>
+							<?php 
+							} while ($row_publicacion = mysql_fetch_assoc($publicaciones)); 
+							?>
 						</ul>
 						<!-- ENDS news-list -->
 						

@@ -115,7 +115,12 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
 						</ul>
 						</li>
 						
-						<li ><a href="blogs.php">BLOG</a></li>
+						<li ><a href="blogs.php">BLOG</a>
+						<ul>
+								<li><a href="agregarBlog.php">Nuevo</a></li>
+								<li><a href="blogs.php">Administrar</a></li>																
+						</ul>
+						</li>
 						<li><a href="staff.html">CUENTA</a>
 						<ul>
 								<li><a href="#">Configuracion</a></li>
