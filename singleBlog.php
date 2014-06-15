@@ -45,13 +45,13 @@ $contenidoblog = mysql_query($sql, $coneccion) or die(mysql_error());
 $row_contenidoblog = mysql_fetch_assoc($contenidoblog);
 $totalRows = mysql_num_rows($contenidoblog);
 }
-
+/*
 if ((isset($_POST['commentID']))  && ($_POST['commentID'] != "")){
 echo 'este es un nuevo comentario';
-inset(_POST['commentID']);
+//inset(_POST['commentID']);
 
 }
-
+*/
 
 ?>
 
@@ -73,6 +73,8 @@ inset(_POST['commentID']);
 		<!-- ENDS prettyPhoto -->
 		
 		<!-- JS -->
+		
+		
 		<script type="text/javascript" src="js/jquery_1.4.2.js"></script>
 		<script type="text/javascript" src="js/jqueryui.js"></script>
 		<script type="text/javascript" src="js/easing.js"></script>
@@ -99,10 +101,61 @@ inset(_POST['commentID']);
 		<!-- tabs -->
         <link rel="stylesheet" href="css/jquery.tabs.css" type="text/css" media="print, projection, screen" />
         <!-- Additional IE/Win specific style sheet (Conditional Comments) -->
-        <!--[if lte IE 7]>
-        <link rel="stylesheet" href="css/jquery.tabs-ie.css" type="text/css" media="projection, screen">
-        <![endif]-->
-  		<!-- ENDS tabs -->
+
+
+<!-- AJAX-->
+<script language="JavaScript" src="	js/ConstructorXMLHttpRequest.js"></script> 
+<script language="JavaScript" type="text/javascript"> 
+var peticionAjax = null;
+peticionAjax = new XMLHttpRequest();
+
+//Se llama cuando cambia peticion01.readyState. 
+function estadoPeticion() { 
+
+ switch(peticionAjax.readyState) { //Según el estado de la petición devolvemos un Texto.
+  case 0:  //alert('sin iniciar');
+ break; 
+// case 1:  alert('cargando');
+ break; 
+ case 2:  
+ //alert('cargando');
+ break; 
+ //case 3:  alert('interactivo');
+ break; 
+ case 4: 
+//alert('finalizando');
+ //Si ya hemos completado la petición, devolvemos además la información. 
+ document.getElementById('listaComentarios').innerHTML= 
+peticionAjax.responseText; 
+ break; 
+ } 
+ }
+
+ function enviarComentario() {
+
+ var iduser = document.getElementById('idusuario').value;
+ var idpublicacion = document.getElementById('idpublicacion').value;
+ var contenido = document.getElementById('contenido').value;
+// alert(iduser + "\n" +idpublicacion + "\n" +contenido); 
+ if(contenido.length =! 0 ){
+ if(peticionAjax) {
+
+ 	peticionAjax.open('GET', "agregarComentario.php?idpublicacion="+idpublicacion+"&idusuario="+iduser+"&contenido="+contenido, true);
+/*Asignamos la función que se llama cada vez que cambia 
+el estado de peticion01.readyState Y LO HACEMOS ANTES THE HACER EL 
+SEND porque inicia la transmisión.*/ 
+// alert('procesando');
+
+document.getElementById('contenido').value = "";
+ peticionAjax.onreadystatechange = estadoPeticion; 
+ peticionAjax.send(null); //No le enviamos datos a la página
+ }
+ 
+ }
+  
+ } 
+</script> 
+
 		
 	</head>
 	
@@ -184,7 +237,8 @@ inset(_POST['commentID']);
 							<div class="post">
 								<!-- post-header -->
 								<div class="post-header single">
-									<div class="post-title"><a href="singleBlog.php" ><?php echo $row_contenidoblog['tPublicacion'];?> </a></div>
+									<div class="post-title"><a href="singleBlog.php" ><?php echo
+									 $row_contenidoblog['tPublicacion'];?> </a></div>
 									<div class="post-meta">
 										<?php 
 										if($totalRows!=0)
@@ -200,14 +254,14 @@ inset(_POST['commentID']);
 								<!-- ENDS post-header -->
 								
 								<!-- post-content -->								
-						 		<div style=" text-align:justify">
+						 		<div id="contenido-post" style="text-align:justify; width: auto;">
 						 		 <?php 
 								 if($totalRows!=0)
-								 echo $row_contenidoblog['contenido']; ?>
+								 echo nl2br($row_contenidoblog['contenido']); ?>
 							  </div>
 								<!-- ENDS post-content -->
 								
-								
+								<div id = listaComentarios>
 								<!-- comments list -->
 									<?php
 						$sqlComents = "select count(*) as total from comentarios where idpublicacion = ".$colname_contenidoblog;
@@ -218,7 +272,7 @@ inset(_POST['commentID']);
 							$resultado = $numComents['total'] ;
 						}	  
 									?>
-								
+									
 								
 								<div class="comments-header"><span class="n-comments"><?php echo $resultado;?></span><span class="text">COMENTARIOS</span></div>
 								<ol class="comments-list">
@@ -233,7 +287,7 @@ inset(_POST['commentID']);
     . "where \n"
     . "comentarios.idpublicacion = ".$colname_contenidoblog	."\n"
     . "and comentarios.idusuario = usuario.idusuario\n"
-    . " LIMIT 0, 30 ";
+    . "ORDER BY `comentarios`.`horacomentario` ASC LIMIT 0, 30";
 								   
 						$result = mysql_query($sqlcomentarios, $coneccion) or die(mysql_error());
 					while($comentariosPublicacion = mysql_fetch_assoc($result)){
@@ -245,7 +299,11 @@ inset(_POST['commentID']);
 											<img alt='avatar' src='img/dummies/avatar.jpg' class='avatar' />
 											<div class="comments-right">
 												<div class="meta-date"><?php echo $comentariosPublicacion['horacomentario']?></div>
-												<div><a href='#' class='url'><strong><?php echo $comentariosPublicacion['nombre']?></strong></a></div>
+												<div><a href='#' class='url'><strong>
+												<?php
+												$shortName = explode(" ",$comentariosPublicacion['nombre']); 
+												echo $shortName[0].' '.$shortName[1];
+												?></strong></a></div>
 												<div class="brief"><p><?php echo $comentariosPublicacion['contenido']?></p></div>
 												<p class="edit-comment"><a href="#">Edit</a></p>
 											</div>
@@ -265,23 +323,25 @@ inset(_POST['commentID']);
 											
 								</ol>
 								<!-- ENDS comments list -->
-
+</div> <!-- lista de comentarios.....>
 								
 								<!-- comments form -->
 								<div class="leave-comment">
 								<p>
 								  <h3>Comentar</h3>	
-									<form action="<?php echo $editFormAction; ?>" method="post" id="commentform">
+								<!--	<form  id="commentform"> -->
 										<fieldset>
 										<p>&nbsp;</p>
 											<p>
-											  <textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"></textarea>
+											  <textarea name="contenido" cols="100%" rows="10" wrap="physical" id="contenido" tabindex="4"></textarea>
 											</p>
-											<p><input type="submit" name="submit" id="submit" tabindex="5" value="SEND" onclick="<?php 
-											$comentario = true;?>"/></p>
+											<p><input type="submit" name="submit" id="submit" tabindex="5" value="SEND" onclick="enviarComentario();"/></p>
 											<p><input type="hidden" name="commentID" value="true" /></p>
+											
+											<p><input type="hidden" name="idpublicacion" id="idpublicacion" value=<?php echo $_GET['idpublicacion']?> /></p>
+											<p><input type="hidden" name="idusuario" id="idusuario" value= <?php echo $_SESSION['idusuario']?>/></p>
 										</fieldset>
-									</form>
+<!--									</form>   -->
 								</div>
 								<!-- ENDS comments form -->	
 

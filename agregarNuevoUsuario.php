@@ -164,7 +164,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 </h4>
 <script type="text/javascript" src="js/form-add-user-validation.js"></script>	
 <!--<form id="form1" method="post" action="home.php" name="form1" onsubmit="return validaCampos()" >-->
-<form id="formAddUser" method="post" action="home.php" name="form1"  >
+<form id="formAddUser" method="post" action=<?php echo $editFormAction ?>name="form1"  >
 	  <p id="error" class="warning"></p>
 <fieldset>
   <table align="center">

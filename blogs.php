@@ -216,7 +216,7 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 							  <div class="post-img"><a href="singleBlog.php" title=""></a>						 		</div>
 						 		<!-- ENDS post-img -->
 							 		<div class="excerpt">
-									 <?php echo substr($row_publicacion['contenido'],0,300).". . ."; ?> 
+									 <?php echo nl2br(substr($row_publicacion['contenido'],0,200)).". . ."; ?> 
 							  </div>
 									<p>
 									

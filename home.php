@@ -187,7 +187,7 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 			              <li>
 						  
 				            <div class="news-brief">
-					         <p style="text-align:justify"> <?php echo  substr($row_publicacion['contenido'],0,300)."<h1>. . .<h1>"; ?></p>						    
+					         <p style="text-align:justify"> <?php echo  nl2br(substr($row_publicacion['contenido'],0,100))."<h1>. . .<h1>"; ?></p>						    
 							  </div>
 							  
 						    <div class="news-date">

@@ -1221,6 +1221,7 @@ div.toggle-container .block p{
 .post{
 	margin-bottom: 20px;
 	overflow: hidden;
+	width: inherit;
 }
 
 #posts .post-header{
@@ -1231,10 +1232,11 @@ div.toggle-container .block p{
 
 #posts .single{
 	margin-left: 0px;
+	width: auto;
 }
 
 #posts .post-header .post-title{
-	width: 580px;
+	width: auto;
 }
 
 #posts .post-header .post-title a{
@@ -1400,6 +1402,7 @@ ul#sidebar li.recent-posts div.recent-excerpt a{
 	margin-bottom: 25px;
 	margin-top: 30px;
 	overflow: hidden;
+	width: auto;
 }
 
 .comments-header .n-comments{

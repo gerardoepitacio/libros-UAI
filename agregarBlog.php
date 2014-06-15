@@ -187,7 +187,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
     </tr>
     <tr valign="baseline">
       <td nowrap align="right" valign="top">Contenido:</td>
-      <td><textarea name="contenido" cols="100" rows="40" wrap="physical"></textarea>
+      <td><textarea name="contenido" cols="80" rows="40"></textarea>
       </td>
     </tr>
     <tr valign="baseline">
