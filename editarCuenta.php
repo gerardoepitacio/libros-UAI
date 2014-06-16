@@ -51,7 +51,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   mysql_select_db($database_coneccion, $coneccion);
   $Result1 = mysql_query($updateSQL, $coneccion) or die(mysql_error());
 
-  $updateGoTo = "about.php";
+  $updateGoTo = "about.php?idusuario=".$_SESSION[idusuario];
   if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
     $updateGoTo .= $_SERVER['QUERY_STRING'];
@@ -63,49 +63,12 @@ $colname_infousuario = "-1";
 if (isset($_SESSION['idusuario'])) {
   $colname_infousuario = (get_magic_quotes_gpc()) ? $_SESSION['idusuario'] : addslashes($_SESSION['idusuario']);
 }
+
 mysql_select_db($database_coneccion, $coneccion);
 $query_infousuario = sprintf("SELECT * FROM usuario WHERE idusuario = %s", $colname_infousuario);
 $infousuario = mysql_query($query_infousuario, $coneccion) or die(mysql_error());
 $row_infousuario = mysql_fetch_assoc($infousuario);
 $totalRows_infousuario = mysql_num_rows($infousuario);
-
-session_start();
- if(empty($_SESSION['idusuario'])) { 
- header('Location: index.php');
- } 
- 
-
-$maxRows_usuario = 10;
-$pageNum_usuario = 0;
-if (isset($_GET['pageNum_usuario'])) {
-  $pageNum_usuario = $_GET['pageNum_usuario'];
-}
-$startRow_usuario = $pageNum_usuario * $maxRows_usuario;
-
-$colname_usuario = "-1";
-if (isset($_SESSION['idusuario'])) {
-  $colname_usuario = (get_magic_quotes_gpc()) ? $_SESSION['idusuario'] : addslashes($_SESSION['idusuario']);
-}
-mysql_select_db($database_coneccion, $coneccion);
-$query_usuario = sprintf("SELECT usuario.nombre,usuario.sexo,usuario.correo, usuario.facebook,
-								usuario.telefono,usuario.direccion, unidad.nombre as unidad 	
-								FROM usuario,unidad 
-								WHERE idusuario = %s 
-								and usuario.idunidad = unidad.idunidad", $colname_usuario);
-								
-$query_limit_usuario = sprintf("%s LIMIT %d, %d", $query_usuario, $startRow_usuario, $maxRows_usuario);
-$usuario = mysql_query($query_limit_usuario, $coneccion) or die(mysql_error());
-$row_usuario = mysql_fetch_assoc($usuario);
-
-if (isset($_GET['totalRows_usuario'])) {
-  $totalRows_usuario = $_GET['totalRows_usuario'];
-} else {
-  $all_usuario = mysql_query($query_usuario);
-  $totalRows_usuario = mysql_num_rows($all_usuario);
-}
-$totalPages_usuario = ceil($totalRows_usuario/$maxRows_usuario)-1;
-
-
 
 ?>
 
@@ -211,7 +174,7 @@ $totalPages_usuario = ceil($totalRows_usuario/$maxRows_usuario)-1;
 						</ul>
 						</li>
 						
-						<li class="current_page_item"><a href="blogs.php">BLOG</a>
+						<li ><a href="blogs.php">BLOG</a>
 						<ul>
 								<li><a href="agregarBlog.php">Nuevo</a></li>
 								<li><a href="blogs.php">Administrar</a></li>																
@@ -220,9 +183,9 @@ $totalPages_usuario = ceil($totalRows_usuario/$maxRows_usuario)-1;
 						
 						</li>
 						
-						<li><a href="about.php?idusuario="<?php echo $_SESSION['idusuario']?>">CUENTA</a></li>
+						<li class="current_page_item"><a href="about.php?idusuario=<?php echo $_SESSION['idusuario'];?>">CUENTA <h></a>
 						<ul>
-								<li><a href="#">Configuracion</a></li>
+								<li><a href="editarCuenta.php">Configuracion</a></li>
 								<li><a href="index.php"> Salir</a></li>
 						</ul>
 						</li>
@@ -245,8 +208,8 @@ $totalPages_usuario = ceil($totalRows_usuario/$maxRows_usuario)-1;
 				<div class="content">
 					<!-- title -->
 					<div class="title-holder">
-						<span class="title">Cuenta </span>
-						<span class="subtitle">Pell </span>					</div>
+						<span class="title">Cuenta: </span>
+						<span class="subtitle"> <?php echo $_SESSION['nombre']; ?> </span>					</div>
 					<!-- ENDS title -->
 					
 					<!-- page-content -->

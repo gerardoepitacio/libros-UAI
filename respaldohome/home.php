@@ -1,8 +1,6 @@
 <?php require_once('Connections/coneccion.php'); ?>
 <?php
-$charset = mysql_client_encoding($coneccion);
-
-echo "The current character set is: $charset\n";
+ 
 
 
   //Empezamos la sesión 

@@ -1,8 +1,7 @@
 <?php require_once('Connections/coneccion.php'); ?>
 <?php
 
-$charset = mysql_client_encoding($coneccion);
-echo "The current character set is: $charset\n";
+ 
   //Empezamos la sesión 
  session_start();
 
@@ -129,9 +128,6 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 				<div id="nav-holder">
 					<ul id="nav" class="sf-menu">
 						<li><a href="home.php">HOME</a>
-							<ul>
-								<li><a href="lecturas.php">algun item</a></li>
-							</ul>
 						</li>
 				
 
@@ -153,7 +149,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 								<li><a href="blogs.php">Administrar</a></li>																
 						</ul>
 						</li>
-						<li><a href="about.php?idusuario="<?php echo $_SESSION['idusuario']?>">CUENTA</a>
+						<li><a href="about.php?idusuario=<?php echo $_SESSION['idusuario'];?>">CUENTA <h></a>
 						<ul>
 								<li><a href="editarCuenta.php">Configuracion</a></li>
 								<li><a href="index.php"> Salir</a></li>

@@ -131,9 +131,6 @@ $totalRows_datosBlog = mysql_num_rows($datosBlog);
 				<div id="nav-holder">
 					<ul id="nav" class="sf-menu">
 						<li ><a href="home.php">HOME</a>
-							<ul>
-								<li><a href="lecturas.php">algun item</a></li>
-							</ul>
 						</li>
 				
 
@@ -158,7 +155,7 @@ $totalRows_datosBlog = mysql_num_rows($datosBlog);
 						
 						</li>
 						
-						<li><a href="about.php?idusuario="<?php echo $_SESSION['idusuario']?>">CUENTA</a></li>
+						<li><a href="about.php?idusuario=<?php echo $_SESSION['idusuario'];?>">CUENTA <h></a>
 						<ul>
 								<li><a href="editarCuenta.php">Configuracion</a></li>
 								<li><a href="index.php"> Salir</a></li>

@@ -119,9 +119,6 @@ $totalRows_librosUsuario = mysql_num_rows($librosUsuario);
 				<div id="nav-holder">
 					<ul id="nav" class="sf-menu">
 						<li><a href="home.php">HOME</a>
-							<ul>
-								<li><a href="lecturas.php">algun item</a></li>
-							</ul>
 						</li>
 				
 
@@ -139,7 +136,7 @@ $totalRows_librosUsuario = mysql_num_rows($librosUsuario);
 								<li><a href="blogs.php">Administrar</a></li>																
 						</ul>
 						</li>
-						<li><a href="about.php?idusuario="<?php echo $_SESSION['idusuario']?>">CUENTA</a>
+						<li><a href="about.php?idusuario=<?php echo $_SESSION['idusuario'];?>">CUENTA <h></a>
 						<ul>
 								<li><a href="editarCuenta.php">Configuracion</a></li>
 								<li><a href="index.php"> Salir</a></li>

@@ -1,8 +1,6 @@
 <?php require_once('Connections/coneccion.php'); ?>
 <?php
-$charset = mysql_client_encoding($coneccion);
-
-echo "The current character set is: $charset\n";
+ 
 
 session_start();
 
@@ -116,9 +114,6 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 				<div id="nav-holder">
 					<ul id="nav" class="sf-menu">
 						<li ><a href="home.php">HOME</a>
-							<ul>
-								<li><a href="lecturas.php">algun item</a></li>
-							</ul>
 						</li>
 				
 
@@ -143,7 +138,7 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 						
 						</li>
 						
-						<li><a href="about.php?idusuario="<?php echo $_SESSION['idusuario']?>">CUENTA</a></li>
+						<li><a href="about.php?idusuario=<?php echo $_SESSION['idusuario'];?>">CUENTA <h></a>
 						<ul>
 								<li><a href="editarCuenta.php">Configuracion</a></li>
 								<li><a href="index.php"> Salir</a></li>
