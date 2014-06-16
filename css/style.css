@@ -1224,6 +1224,12 @@ div.toggle-container .block p{
 	width: inherit;
 }
 
+.single-post{
+	margin-bottom: 20px;
+	overflow: hidden;
+	width: 700;
+}
+
 #posts .post-header{
 	position: relative;
 	margin-bottom: 5px;
@@ -1396,6 +1402,7 @@ ul#sidebar li.recent-posts div.recent-excerpt a{
 
 .comments-list{
 	display: block;
+	width: 500px;
 }
 
 .comments-header{
@@ -1433,6 +1440,7 @@ ul#sidebar li.recent-posts div.recent-excerpt a{
 	overflow: visible;
 	position: relative;
 	padding: 0px 0px 20px 0px;
+	width: 600px;
 }
 
 .comments-list li a{

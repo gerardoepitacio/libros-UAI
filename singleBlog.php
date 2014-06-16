@@ -234,7 +234,7 @@ document.getElementById('contenido').value = "";
 						<!-- POSTS -->
 						<div id="posts">
 							<!-- post -->
-							<div class="post">
+							<div class="single-post">
 								<!-- post-header -->
 								<div class="post-header single">
 									<div class="post-title"><a href="singleBlog.php" ><?php echo
@@ -304,9 +304,9 @@ document.getElementById('contenido').value = "";
 												$shortName = explode(" ",$comentariosPublicacion['nombre']); 
 												echo $shortName[0].' '.$shortName[1];
 												?></strong></a></div>
-												<div class="brief"><p><?php echo $comentariosPublicacion['contenido']?></p></div>
-												<p class="edit-comment"><a href="#">Edit</a></p>
-											</div>
+												<div class="brief">
+											  <p><?php echo $comentariosPublicacion['contenido']?></p></div>
+												</div>
 										</div>
 								  </li>
 											
@@ -331,10 +331,9 @@ document.getElementById('contenido').value = "";
 								  <h3>Comentar</h3>	
 								<!--	<form  id="commentform"> -->
 										<fieldset>
-										<p>&nbsp;</p>
-											<p>
-											  <textarea name="contenido" cols="100%" rows="10" wrap="physical" id="contenido" tabindex="4"></textarea>
-											</p>
+										<p>
+											  <textarea name="contenido" cols="80%" rows="10" wrap="physical" id="contenido" tabindex="4"></textarea>
+										</p>
 											<p><input type="submit" name="submit" id="submit" tabindex="5" value="SEND" onclick="enviarComentario();"/></p>
 											<p><input type="hidden" name="commentID" value="true" /></p>
 											
