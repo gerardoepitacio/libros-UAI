@@ -1,3 +1,5 @@
+
+
 $(document).ready(function(){
 
 	// hide messages 
@@ -68,12 +70,27 @@ $(document).ready(function(){
 		}
 		
 		
+		var name = $("input#password2").val();
+		if(name == ""){
+			$("#error").fadeIn().text("Dato requerido.");
+			$("input#password2").focus();
+			return false;
+		}
+		
 		var name = $("input#password").val();
 		if(name == ""){
 			$("#error").fadeIn().text("Dato requerido.");
 			$("input#password").focus();
 			return false;
 		}
+		
+		var p2 = $("input#password2").val();
+		if(p2 != name){
+			$("#error").fadeIn().text("Las contraseñas no coindicen!");
+			$("input#password").focus();
+			return false;
+		}
+		
 		
 		// ajax
 		$.ajax({

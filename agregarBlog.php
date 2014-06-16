@@ -137,7 +137,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 								<li><a href="administracionLibros.php">Administrar</a></li>								
 						</ul>
 						</li>
-						<li><a href="agregarAutor.php">MIS LECTURAS</a>
+						<li><a href="lecturas.php">MIS LECTURAS</a>
 						<ul>
 								<li><a href="index-3d.html">Actuales</a></li>
 								<li><a href="index-3d.html">Hechas</a></li>																

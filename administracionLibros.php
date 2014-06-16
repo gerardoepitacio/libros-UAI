@@ -39,7 +39,13 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 mysql_select_db($database_coneccion, $coneccion);
 
 
- $query_librosUsuario = sprintf("SELECT idlibro, estado, idautor, ideditorial, publicacion, disponible, titulo FROM libro where idpropietario = '%s'",$_SESSION['idusuario']);
+ $query_librosUsuario = sprintf("SELECT idlibro, estado,autor.nombre as autor, editorial.nombre as editorial, publicacion, disponible, titulo FROM libro,autor,editorial
+   where libro.idpropietario = '%s'
+   and   libro.idautor = autor.idautor
+   and   libro.ideditorial = editorial.ideditorial
+   ",$_SESSION['idusuario']
+   );
+ 
 
 $librosUsuario = mysql_query($query_librosUsuario, $coneccion) or die(mysql_error());
 $row_librosUsuario = mysql_fetch_assoc($librosUsuario);
@@ -124,11 +130,7 @@ $totalRows_librosUsuario = mysql_num_rows($librosUsuario);
 								<li><a href="administracionLibros.php">Administrar</a></li>								
 						</ul>
 						</li>
-						<li><a href="agregarAutor.php">MIS LECTURAS</a>
-						<ul>
-								<li><a href="index-3d.html">Actuales</a></li>
-								<li><a href="index-3d.html">Hechas</a></li>																
-						</ul>
+						<li><a href="lecturas.php">MIS LECTURAS</a>
 						</li>
 						
 						<li ><a href="blogs.php">BLOG</a>
@@ -177,29 +179,36 @@ $totalRows_librosUsuario = mysql_num_rows($librosUsuario);
 						<div class="one-half">
 		
 
-<table cellspacing="0" cellpadding="0" border="0">
+<table width="150%" border="0" cellpadding="0" cellspacing="0">
 <tbody>
   <tr>
     <th>idlibro</td>
     <th>estado</td>
     <th>idautor</td>
-    <th>ideditorial</td>
-    <th>publicacion</td>
-    <th>disponible</td>
     <th>titulo</td>
+    <th>publicacion</td>
+    <th>editorial</td>
+    <th>disponible</td>
     <th>Acciones    
   </tr>
   <?php do { ?>
     <tr>
       <td><?php echo $row_librosUsuario['idlibro']; ?></td>
       <td><?php echo $row_librosUsuario['estado']; ?></td>
-      <td><?php echo $row_librosUsuario['idautor']; ?></td>
-      <td><?php echo $row_librosUsuario['ideditorial']; ?></td>
-      <td><?php echo $row_librosUsuario['publicacion']; ?></td>
-      <td><?php echo $row_librosUsuario['disponible']; ?></td>
+      <td><?php echo $row_librosUsuario['autor']; ?></td>
       <td><?php echo $row_librosUsuario['titulo']; ?></td>
-      <td><a href="editarLibro.php?idlibro=<?php echo $row_librosUsuario['idlibro'];?>">Editar</a> |
-	   <a href="eliminarRegistro.php?idlibro=<?php echo $row_librosUsuario['idlibro']; ?>">Eliminar</a> </td>
+      <td><?php echo $row_librosUsuario['publicacion']; ?></td>
+      <td><?php echo $row_librosUsuario['editorial']; ?></td>
+      <td>
+	  <?php 
+	  if($row_librosUsuario['disponible'] == 1)
+	  echo 'disponible';
+	  else
+	  echo '<a href="detallePrestamo.php?idlibro='.$row_librosUsuario['idlibro'].'">prestado</a>'
+	  ?>
+	  
+	  </td>
+      <td><a href="editarLibro.php?idlibro=<?php echo $row_librosUsuario['idlibro'];?>">Editar </a><a href="eliminarRegistro.php?idlibro=<?php echo $row_librosUsuario['idlibro']; ?>">Eliminar</a> </td>
     </tr>
     <?php } while ($row_librosUsuario = mysql_fetch_assoc($librosUsuario)); ?>
 	</tbody>

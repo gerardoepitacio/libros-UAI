@@ -1,5 +1,18 @@
 <?php require_once('Connections/coneccion.php'); ?>
 <?php
+
+$charset = mysql_client_encoding($coneccion);
+echo "The current character set is: $charset\n";
+  //Empezamos la sesión 
+ session_start();
+
+ //Si no hay una sesión creada, redireccionar al index. 
+ if(empty($_SESSION['idusuario'])) { // Recuerda usar corchetes.
+ header('Location: index.php');
+ } // Recuerda usar corchetes
+
+
+
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
   $theValue = (!get_magic_quotes_gpc()) ? addslashes($theValue) : $theValue;
@@ -42,6 +55,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 
   mysql_select_db($database_coneccion, $coneccion);
   $Result1 = mysql_query($insertSQL, $coneccion) or die(mysql_error());
+
+
 
   $insertGoTo = "libros.php";
   if (isset($_SERVER['QUERY_STRING'])) {
@@ -125,7 +140,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 								<li><a href="administracionLibros.php">Administrar</a></li>								
 						</ul>
 						</li>
-						<li><a href="agregarAutor.php">MIS LECTURAS</a>
+						<li><a href="lecturas.php">MIS LECTURAS</a>
 						<ul>
 								<li><a href="index-3d.html">Actuales</a></li>
 								<li><a href="index-3d.html">Hechas</a></li>																
@@ -180,31 +195,35 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
   <table align="center">
     <tr valign="baseline">
       <td nowrap align="right">Titulo:</td>
-      <td><input type="text" name="estado" value="" size="32"></td>
+      <td><input type="text" name="estado" value="" size="32" required></td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Idautor:</td>
-      <td><input type="text" name="idautor" value="" size="32"></td>
+      <td><input type="text" name="idautor" value="" size="32" required></td>
     </tr>
     <tr valign="baseline">
-      <td nowrap align="right">Idpropietario:</td>
-      <td><input type="text" name="idpropietario" value="" size="32"></td>
-    </tr>
-    <tr valign="baseline">
+	  <?php 
+	 	 mysql_select_db($database_coneccion, $coneccion);
+	  	$sqlEditoriales = "select nombre,ideditorial from editorial";
+		$editoriales = mysql_query($sqlEditoriales, $coneccion) or die(mysql_error());
+
+	echo '	<datalist id="editoriales">';		
+		while($row = mysql_fetch_array($editoriales)){
+//	echo "<option value='".$resultado[nombre_campo]."'> ". $nombre_campo."</option>";
+    echo '<option value="'.$row['ideditorial'].'" label="'.$row['nombre'].'">';	
+	}//while
+	echo '</datalist>';
+	  ?>
       <td nowrap align="right">Ideditorial:</td>
-      <td><input type="text" name="ideditorial" value="" size="32"></td>
+      <td><input type="text" name="ideditorial" list = "editoriales" value="" size="32" required></td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Publicacion:</td>
-      <td><input type="text" name="publicacion" value="" size="32"></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap align="right">Disponible:</td>
-      <td><input type="text" name="disponible" value="" size="32"></td>
+      <td><input type="date" name="publicacion" value="" size="32" required required></td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Estado:</td>
-      <td><input type="text" name="titulo" value="" size="32" /></td>
+      <td><input type="text" name="titulo" value="" size="32"  required/></td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">&nbsp;</td>
@@ -212,6 +231,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
     </tr>
   </table>
   <input type="hidden" name="MM_insert" value="form1">
+  <td><input type="hidden" name="idpropietario" value= <?php echo $_SESSION['idusuario'];?> size= "32" ></td>
+  <td><input type="hidden" name="disponible" value="1" size="32"></td>
 </form>
 <p>&nbsp;</p>
 

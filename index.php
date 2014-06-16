@@ -7,11 +7,10 @@ if (!isset($_SESSION)) {
   unset($_SESSION['MM_Username']);
   unset($_SESSION['MM_UserGroup']);
   unset($_SESSION['idusuario']);
-  
+  unset($_SESSION['nombre']);
   }
   else{
   session_destroy();
-  
   }
 
 $loginFormAction = $_SERVER['PHP_SELF'];

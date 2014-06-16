@@ -11,7 +11,18 @@
 
 
 mysql_select_db($database_coneccion, $coneccion);
-$query_librosUsuario = "SELECT idlibro, estado, idautor, ideditorial, publicacion, disponible, titulo FROM libro where idpropietario = ". $_SESSION['idusuario'];
+$query_librosUsuario = "SELECT idlibro, estado,autor.nombre as autor, editorial.nombre as editorial, publicacion, disponible, titulo 
+FROM libro,autor,editorial 
+where 
+idpropietario = ". $_SESSION['idusuario']."
+and   libro.idautor = autor.idautor
+and   libro.ideditorial = editorial.ideditorial
+"
+;
+
+
+
+
 $librosUsuario = mysql_query($query_librosUsuario, $coneccion) or die(mysql_error());
 $row_librosUsuario = mysql_fetch_assoc($librosUsuario);
 $totalRows_librosUsuario = mysql_num_rows($librosUsuario);
@@ -119,7 +130,7 @@ $totalRows_librosUsuario = mysql_num_rows($librosUsuario);
 								<li><a href="administracionLibros.php">Administrar</a></li>								
 						</ul>
 						</li>
-						<li><a href="agregarAutor.php">MIS LECTURAS</a>
+						<li><a href="lecturas.php">MIS LECTURAS</a>
 						<ul>
 								<li><a href="index-3d.html">Actuales</a></li>
 								<li><a href="index-3d.html">Hechas</a></li>																
@@ -169,28 +180,34 @@ $totalRows_librosUsuario = mysql_num_rows($librosUsuario);
                         <!-- right -->
 <div class="one-half last"><br/>
           <!-- ENDS info boxes -->
-							<h4>Mis libritos</h4>
+<h4>Mis libritos</h4>
 							
 <table cellspacing="0" cellpadding="0" border="0">
 <tbody>
   <tr>
-    <th>idlibro</td>
-    <th>estado</td>
-    <th>idautor</td>
-    <th>ideditorial</td>
-    <th>publicacion</td>
-    <th>disponible</td>
-    <th>titulo</td>
+    <th>idlibro</th>
+    <th>estado</th>
+    <th>autor</th>
+    <th>titulo</th>
+    <th>editorial</th>
+    <th>publicacion</th>
+    <th>disponible</th>
   </tr>
   <?php do { ?>
     <tr>
       <td><?php echo $row_librosUsuario['idlibro']; ?></td>
       <td><?php echo $row_librosUsuario['estado']; ?></td>
-      <td><?php echo $row_librosUsuario['idautor']; ?></td>
-      <td><?php echo $row_librosUsuario['ideditorial']; ?></td>
-      <td><?php echo $row_librosUsuario['publicacion']; ?></td>
-      <td><?php echo $row_librosUsuario['disponible']; ?></td>
+      <td><?php echo $row_librosUsuario['autor']; ?></td>
       <td><?php echo $row_librosUsuario['titulo']; ?></td>
+      <td><?php echo $row_librosUsuario['editorial']; ?></td>
+      <td><?php echo $row_librosUsuario['publicacion']; ?></td>
+      <td><?php 
+	   
+	  if($row_librosUsuario['disponible'] == 1)
+	  echo 'disponible';
+	  else
+	  echo '<a href="detallePrestamo.php?idlibro='.$row_librosUsuario['idlibro'].'">prestado</a>'
+	  ?></td>
     </tr>
     <?php } while ($row_librosUsuario = mysql_fetch_assoc($librosUsuario)); ?>
 	</tbody>
@@ -206,7 +223,7 @@ $totalRows_librosUsuario = mysql_num_rows($librosUsuario);
 					<!-- ENDS page-content -->
 						
 						
-				</div>
+			</div>
 				<!-- ENDS content -->
 				
 				<!-- twitter -->

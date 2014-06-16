@@ -1,10 +1,8 @@
 <?php require_once('Connections/coneccion.php'); ?>
 <?php
+
 $charset = mysql_client_encoding($coneccion);
-
 echo "The current character set is: $charset\n";
-
-
   //Empezamos la sesión 
  session_start();
 
@@ -118,7 +116,7 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 								<li><a href="administracionLibros.php">Administrar</a></li>								
 						</ul>
 						</li>
-						<li><a href="agregarAutor.php">MIS LECTURAS</a>
+						<li><a href="lecturas.php">MIS LECTURAS</a>
 						<ul>
 								<li><a href="index-3d.html">Actuales</a></li>
 								<li><a href="index-3d.html">Hechas</a></li>																

@@ -167,7 +167,7 @@ img.shadow-img{
 }
 
 .one-half{
-	width: 458px;
+	width: 800;
 }
 
 .one-third{width: 300px;}
@@ -207,7 +207,7 @@ img.shadow-img{
 
 
 .page-content{
-	width: 960px;
+	width: 800px;
 	margin-left: 20px;
 	margin-right: 20px;
 	overflow: hidden;

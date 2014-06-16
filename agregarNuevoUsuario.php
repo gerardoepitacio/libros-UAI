@@ -115,6 +115,10 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
         <![endif]-->
   		<!-- ENDS tabs -->
 		
+		<script>
+	
+		</script>
+		
 	</head>
 	
 
@@ -167,18 +171,25 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 <form id="formAddUser" method="post" action=<?php echo $editFormAction ?>name="form1"  >
 	  <p id="error" class="warning"></p>
 <fieldset>
-  <table align="center">
+  <table width="175%" align="center">
     <tr valign="baseline">
       <td nowrap align="right">Nombre:</td>
       <td><input id="nombre" class="entradaTexto" type="text" name="nombre" value="" size="32"></td>
     </tr>
     <tr valign="baseline">
+	<datalist id="sexos">
+		<option label="Masculino" value="M">
+		<option label="Femenino" value="F">
+	</datalist>
+	
+	
+	
       <td nowrap align="right">Sexo:</td>
-      <td><input id="sexo" class="entradaTexto" type="text" name="sexo" value="" size="32"></td>
+      <td><input id="sexo" class="entradaTexto" type="text" list = "sexos" name="sexo" value="" size="32"></td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Correo:</td>
-      <td><input id="correo" class="entradaTexto" type="text" name="correo" value="" size="32"></td>
+      <td><input id="correo" class="entradaTexto" type="email" name="correo" value="" size="32"></td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Facebook:</td>
@@ -186,7 +197,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Telefono:</td>
-      <td><input  id="telefono" class="entradaTexto" type="text" name="telefono" value="" size="32"></td>
+      <td><input  id="telefono" class="entradaTexto" type="tel" name="telefono" value="" size="32"></td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Direccion:</td>
@@ -194,11 +205,28 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Idunidad:</td>
-      <td><input id="idunidad" class="entradaTexto" type="text" name="idunidad" value="" size="32"></td>
+	  <?php 
+	 	 mysql_select_db($database_coneccion, $coneccion);
+	  	$sqlUnidades = "select nombre,idunidad from unidad";
+		$unidades = mysql_query($sqlUnidades, $coneccion) or die(mysql_error());
+
+	echo '	<datalist id="unidades">';		
+		while($row = mysql_fetch_array($unidades)){
+//	echo "<option value='".$resultado[nombre_campo]."'> ". $nombre_campo."</option>";
+    echo '<option value="'.$row['idunidad'].'" label="'.$row['nombre'].'">';	
+	}//while
+	echo '</datalist>';
+	  ?>
+
+      <td><input id="idunidad" class="entradaTexto" type="text" list = "unidades" name="idunidad"  value="" size="32"></td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Password:</td>
       <td><input id="password" class="entradaTexto" type="password" name="password" value="" size="32"></td>
+    </tr>
+	<tr valign="baseline">
+      <td nowrap align="right">Repite Password:</td>
+      <td><input id="password2" class="entradaTexto" type="password" name="password2" value="" size="32"></td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">&nbsp;</td>
