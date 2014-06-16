@@ -130,7 +130,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 					<ul id="nav" class="sf-menu">
 						<li><a href="home.php">HOME</a>
 							<ul>
-								<li><a href="index-3d.html">algun item</a></li>
+								<li><a href="lecturas.php">algun item</a></li>
 							</ul>
 						</li>
 				
@@ -142,8 +142,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 						</li>
 						<li><a href="lecturas.php">MIS LECTURAS</a>
 						<ul>
-								<li><a href="index-3d.html">Actuales</a></li>
-								<li><a href="index-3d.html">Hechas</a></li>																
+								<li><a href="lecturas.php">Actuales</a></li>
+								<li><a href="lecturas.php">Hechas</a></li>																
 						</ul>
 						</li>
 						
@@ -153,9 +153,9 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 								<li><a href="blogs.php">Administrar</a></li>																
 						</ul>
 						</li>
-						<li><a href="staff.html">CUENTA</a>
+						<li><a href="about.php?idusuario="<?php echo $_SESSION['idusuario']?>">CUENTA</a>
 						<ul>
-								<li><a href="#">Configuracion</a></li>
+								<li><a href="editarCuenta.php">Configuracion</a></li>
 								<li><a href="index.php"> Salir</a></li>
 						</ul>
 						</li>

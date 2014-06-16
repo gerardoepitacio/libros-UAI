@@ -39,9 +39,6 @@ if (isset($_GET['totalRows_leidos'])) {
 }
 $totalPages_leidos = ceil($totalRows_leidos/$maxRows_leidos)-1;
 
-$charset = mysql_client_encoding($coneccion);
-echo "The current character set is: $charset\n";
-
 $maxRows_lecturas = 10;
 $pageNum_lecturas = 0;
 if (isset($_GET['pageNum_lecturas'])) {
@@ -159,7 +156,7 @@ $totalPages_lecturas = ceil($totalRows_lecturas/$maxRows_lecturas)-1;
 					<ul id="nav" class="sf-menu">
 						<li ><a href="home.php">HOME</a>
 							<ul>
-								<li><a href="index-3d.html">algun item</a></li>
+								<li><a href="lecturas.php">algun item</a></li>
 							</ul>
 						</li>
 				
@@ -171,8 +168,8 @@ $totalPages_lecturas = ceil($totalRows_lecturas/$maxRows_lecturas)-1;
 						</li>
 						<li class="current_page_item"><a href="lecturas.php">MIS LECTURAS</a>
 						<ul>
-								<li><a href="index-3d.html">Actuales</a></li>
-								<li><a href="index-3d.html">Hechas</a></li>																
+								<li><a href="lecturas.php">Actuales</a></li>
+								<li><a href="lecturas.php">Hechas</a></li>																
 						</ul>
 						</li>
 						
@@ -185,9 +182,9 @@ $totalPages_lecturas = ceil($totalRows_lecturas/$maxRows_lecturas)-1;
 						
 						</li>
 						
-						<li><a href="staff.html">CUENTA</a></li>
+						<li><a href="about.php?idusuario="<?php echo $_SESSION['idusuario']?>">CUENTA</a></li>
 						<ul>
-								<li><a href="#">Configuracion</a></li>
+								<li><a href="editarCuenta.php">Configuracion</a></li>
 								<li><a href="index.php"> Salir</a></li>
 						</ul>
 						</li>

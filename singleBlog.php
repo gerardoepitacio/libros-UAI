@@ -38,7 +38,7 @@ $sql = "select \n"
     . "publicacion.idpublicacion = ".$colname_contenidoblog."\n"
     . "and lectura.idlectura = publicacion.idlectura \n"
     . "and lectura.idusuario = usuario.idusuario\n"
-    . "and lectura.idlibro = libro.idlibro LIMIT 0, 30 ";
+    . "and lectura.idlibro = libro.idlibro";
 
 
 $contenidoblog = mysql_query($sql, $coneccion) or die(mysql_error());
@@ -185,7 +185,7 @@ document.getElementById('contenido').value = "";
 					<ul id="nav" class="sf-menu">
 						<li ><a href="home.php">HOME</a>
 							<ul>
-								<li><a href="index-3d.html">algun item</a></li>
+								<li><a href="lecturas.php">algun item</a></li>
 							</ul>
 						</li>
 				
@@ -197,8 +197,8 @@ document.getElementById('contenido').value = "";
 						</li>
 						<li><a href="lecturas.php">MIS LECTURAS</a>
 						<ul>
-								<li><a href="index-3d.html">Actuales</a></li>
-								<li><a href="index-3d.html">Hechas</a></li>																
+								<li><a href="lecturas.php">Actuales</a></li>
+								<li><a href="lecturas.php">Hechas</a></li>																
 						</ul>
 						</li>
 						
@@ -208,9 +208,9 @@ document.getElementById('contenido').value = "";
 								<li><a href="blogs.php">Administrar</a></li>																
 						</ul>
 						</li>
-						<li><a href="staff.html">CUENTA</a>
+						<li><a href="about.php?idusuario="<?php echo $_SESSION['idusuario']?>">CUENTA</a>
 						<ul>
-								<li><a href="#">Configuracion</a></li>
+								<li><a href="editarCuenta.php">Configuracion</a></li>
 								<li><a href="index.php"> Salir</a></li>
 						</ul>
 						</li>
@@ -287,7 +287,7 @@ document.getElementById('contenido').value = "";
     . "where \n"
     . "comentarios.idpublicacion = ".$colname_contenidoblog	."\n"
     . "and comentarios.idusuario = usuario.idusuario\n"
-    . "ORDER BY `comentarios`.`horacomentario` ASC LIMIT 0, 30";
+    . "ORDER BY `comentarios`.`horacomentario` ASC ";
 								   
 						$result = mysql_query($sqlcomentarios, $coneccion) or die(mysql_error());
 					while($comentariosPublicacion = mysql_fetch_assoc($result)){
@@ -296,7 +296,7 @@ document.getElementById('contenido').value = "";
 													
 									 <li>
 										<div class="comment-wrap">
-											<img alt='avatar' src='img/dummies/avatar.jpg' class='avatar' />
+											<img src='img/dummies/avatar.jpg' alt='avatar' width="51" height="51" class='avatar' />
 											<div class="comments-right">
 												<div class="meta-date"><?php echo $comentariosPublicacion['horacomentario']?></div>
 												<div><a href='#' class='url'><strong>
@@ -306,8 +306,8 @@ document.getElementById('contenido').value = "";
 												?></strong></a></div>
 												<div class="brief">
 											  <p><?php echo $comentariosPublicacion['contenido']?></p></div>
-												</div>
-										</div>
+										  </div>
+									   </div>
 								  </li>
 											
 									<?php

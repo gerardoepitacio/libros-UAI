@@ -195,7 +195,7 @@ img.shadow-img{
 
 .content-blog{
 	overflow: hidden;
-	margin-top: 30px;
+	margin-top: 10px;
 	min-height: 600px;
 	line-height: 1.5em;
 }
@@ -1430,7 +1430,7 @@ ul#sidebar li.recent-posts div.recent-excerpt a{
 .comments-list li{
 	display: block;
 	margin-bottom: 0px;
-	padding: 10px 10px 10px 0px;
+	padding: 5px 5px 5px 5px;
 	line-height: 1.5em;
 }
 
@@ -1439,7 +1439,7 @@ ul#sidebar li.recent-posts div.recent-excerpt a{
 .comments-list li .comment-wrap{
 	overflow: visible;
 	position: relative;
-	padding: 0px 0px 20px 0px;
+	padding: 0px 0px 0px 0px;
 	width: 600px;
 }
 
@@ -1449,16 +1449,16 @@ ul#sidebar li.recent-posts div.recent-excerpt a{
 }
 
 .comments-list li .comments-right{
-	min-height: 80px;
+	min-height: 50px;
 	overflow: hidden;
-	padding-left: 20px;
+	padding-left: 5px;
 	position: relative;
 }
 
 .comments-list li img{
 	display: block;
 	float: left;
-	margin: 0px 12px 20px 0px;
+	margin: 0px 10px 10px 0px;
 }
 
 .comments-list .meta-date{

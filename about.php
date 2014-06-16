@@ -1,53 +1,43 @@
-						
 <?php require_once('Connections/coneccion.php'); ?>
 <?php
-function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
-{
-  $theValue = (!get_magic_quotes_gpc()) ? addslashes($theValue) : $theValue;
+session_start();
+ if(empty($_SESSION['idusuario'])) { 
+ header('Location: index.php');
+ } 
+ 
 
-  switch ($theType) {
-    case "text":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;    
-    case "long":
-    case "int":
-      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
-      break;
-    case "double":
-      $theValue = ($theValue != "") ? "'" . doubleval($theValue) . "'" : "NULL";
-      break;
-    case "date":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;
-    case "defined":
-      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
-      break;
-  }
-  return $theValue;
+$maxRows_usuario = 10;
+$pageNum_usuario = 0;
+if (isset($_GET['pageNum_usuario'])) {
+  $pageNum_usuario = $_GET['pageNum_usuario'];
 }
+$startRow_usuario = $pageNum_usuario * $maxRows_usuario;
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
+$colname_usuario = "-1";
+if (isset($_GET['idusuario'])) {
+  $colname_usuario = (get_magic_quotes_gpc()) ? $_GET['idusuario'] : addslashes($_GET['idusuario']);
 }
+mysql_select_db($database_coneccion, $coneccion);
+$query_usuario = sprintf("SELECT usuario.nombre,usuario.sexo,usuario.correo, usuario.facebook,
+								usuario.telefono,usuario.direccion, unidad.nombre as unidad 	
+								FROM usuario,unidad 
+								WHERE idusuario = %s 
+								and usuario.idunidad = unidad.idunidad", $colname_usuario);
+								
+$query_limit_usuario = sprintf("%s LIMIT %d, %d", $query_usuario, $startRow_usuario, $maxRows_usuario);
+$usuario = mysql_query($query_limit_usuario, $coneccion) or die(mysql_error());
+$row_usuario = mysql_fetch_assoc($usuario);
 
-if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form2")) {
-  $insertSQL = sprintf("INSERT INTO autor (nombre, nacionalidad, nacimiento, fallecimiento) VALUES (%s, %s, %s, %s)",
-                       GetSQLValueString($_POST['nombre'], "text"),
-                       GetSQLValueString($_POST['nacionalidad'], "text"),
-                       GetSQLValueString($_POST['nacimiento'], "date"),
-                       GetSQLValueString($_POST['fallecimiento'], "date"));
-
-  mysql_select_db($database_coneccion, $coneccion);
-  $Result1 = mysql_query($insertSQL, $coneccion) or die(mysql_error());
-
-  $insertGoTo = "/template/simple/home.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
-  }
-  header(sprintf("Location: %s", $insertGoTo));
+if (isset($_GET['totalRows_usuario'])) {
+  $totalRows_usuario = $_GET['totalRows_usuario'];
+} else {
+  $all_usuario = mysql_query($query_usuario);
+  $totalRows_usuario = mysql_num_rows($all_usuario);
 }
+$totalPages_usuario = ceil($totalRows_usuario/$maxRows_usuario)-1;
+
+
+
 ?>
 
 
@@ -135,18 +125,17 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form2")) {
 				</div>
 				<!-- ENDS search -->
 				
-				
 				<!-- navigation -->
 				<div id="nav-holder">
 					<ul id="nav" class="sf-menu">
-						<li><a href="home.php">HOME</a>
+						<li ><a href="home.php">HOME</a>
 							<ul>
 								<li><a href="lecturas.php">algun item</a></li>
 							</ul>
 						</li>
 				
 
-						<li  class="current_page_item"><a href="libros.php">MIS LIBROS</a>
+						<li  ><a href="libros.php">MIS LIBROS</a>
 						<ul>
 								<li><a href="administracionLibros.php">Administrar</a></li>								
 						</ul>
@@ -158,13 +147,16 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form2")) {
 						</ul>
 						</li>
 						
-						<li ><a href="blogs.php">BLOG</a>
+						<li class="current_page_item"><a href="blogs.php">BLOG</a>
 						<ul>
 								<li><a href="agregarBlog.php">Nuevo</a></li>
 								<li><a href="blogs.php">Administrar</a></li>																
 						</ul>
+						
+						
 						</li>
-						<li><a href="about.php?idusuario="<?php echo $_SESSION['idusuario']?>">CUENTA</a>
+						
+						<li><a href="about.php?idusuario="<?php echo $_SESSION['idusuario']?>>CUENTA</a></li>
 						<ul>
 								<li><a href="editarCuenta.php">Configuracion</a></li>
 								<li><a href="index.php"> Salir</a></li>
@@ -189,63 +181,42 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form2")) {
 				<div class="content">
 					<!-- title -->
 					<div class="title-holder">
-						<span class="title">Autor</span>
-						<span class="subtitle">Podemos agregar a un nuevo autor  .</span>
-					</div>
+						<span class="title">Cuenta </span>
+						<span class="subtitle">Pell </span>					</div>
 					<!-- ENDS title -->
 					
 					<!-- page-content -->
-					<div class="page-content">
-					
-						<!-- 2 cols -->
-						<div class="one-half">
-							<h4>Agregar a un Nuevo Autor 
-							  <!-- form -->
-							  <script type="text/javascript" src="js/form-validation.js"></script>
-</h4>
-							<form id="form1" name="form1" method="post" action="">
-  
-</form>
+				  <div class="page-content">
 
-<form method="post" name="form2" action="<?php echo $editFormAction; ?>">
-  <table align="center">
-    <tr valign="baseline">
-      <td nowrap align="right">Nombre:</td>
-      <td><input type="text" name="nombre" value="" size="32"></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap align="right">Nacionalidad:</td>
-      <td><input type="text" name="nacionalidad" value="" size="32"></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap align="right">Nacimiento:</td>
-      <td><input type="text" name="nacimiento" value="" size="32"></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap align="right">Fallecimiento:</td>
-      <td><input type="text" name="fallecimiento" value="" size="32"></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap align="right">&nbsp;</td>
-      <td><input type="submit" value="Insertar registro"></td>
-    </tr>
-  </table>
-  <input type="hidden" name="MM_insert" value="form2">
-</form>
-
-							
-							
-							<p id="success" class="success">Thanks for your comments.</p>
-							<!-- ENDS form -->
-		
-						</div>
-						<div class="clear "></div>
-						<!-- ENDS 2 cols -->
-
-					</div>
+						<!-- staff -->
+					  <ul class="staff">
+						  <li>
+						   <?php 
+									  if(strcasecmp($row_usuario['sexo'],'f') == 0 )
+									  echo '<img src="img/girl.png" alt="Pic" />'; 
+									  else
+									   echo '<img src="img/guy.png" alt="Pic" />';
+									  ?>
+						  
+							 
+							  <div class="information">
+								  <div class="header">
+									  <div class="name"><?php echo $row_usuario['nombre']; ?></div>
+									  <div class="contact"><a href="<?php echo $row_usuario['facebook']; ?>">
+									  								<?php echo $row_usuario['facebook']; ?></a> </div>
+									<div class="contact">Correro: <?php echo $row_usuario['correo']; ?></div>
+									  <div class="contact">Direccion: <?php echo $row_usuario['direccion']; ?> </div>
+									  <div class="contact">Telefono: <?php echo $row_usuario['telefono']; ?> </div>
+									  <div class="contact"><?php echo $row_usuario['unidad']; ?>  </div>
+								  </div>
+							  </div>
+						  </li>
+			             
+					  
+					  </ul>
+				  </div>
 					<!-- ENDS page-content -->
 
-						
 				</div>
 				<!-- ENDS content -->
 				
@@ -266,26 +237,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form2")) {
 		<div id="footer">
 		<div class="degree">
 			<!-- wrapper -->
-			<div class="wrapper">
-				<!-- social bar -->
-				<div id="social-bar">
-					
-					<ul class="follow-us">
-						<li><span>FOLLOW US</span></li>
-						<li ><a href="#" class="icon-32 twitter-32 social-tooltip" title="Follow our tweets">link</a></li>
-						<li ><a href="#" class="icon-32 vimeo-32 social-tooltip" title="Lorem ipsum dolor">link</a></li>
-						<li ><a href="#" class="icon-32 dribbble-32 social-tooltip" title="Lorem ipsum dolor">link</a></li>
-						<li ><a href="#" class="icon-32 flickr-32 social-tooltip" title="Lorem ipsum dolor">link</a></li>
-						<li ><a href="#" class="icon-32 facebook-32 social-tooltip" title="Lorem ipsum dolor">link</a></li>
-
-					</ul>
-				</div>
-				<!-- ENDS social bar -->
-                <!-- footer-cols -->
-                <!-- ENDS footer-cols -->
-            </div>
 			<!-- ENDS footer-wrapper -->
-		</div>
+</div>
 		</div>
 		<!-- ENDS FOOTER -->
 
@@ -303,3 +256,6 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form2")) {
 	
 	</body>
 </html>
+<?php
+mysql_free_result($usuario);
+?>

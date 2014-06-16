@@ -60,7 +60,7 @@ $insertSQL = sprintf("INSERT INTO comentarios (idpublicacion, idusuario, conteni
     . "where \n"
     . "comentarios.idpublicacion = ".$_GET['idpublicacion']."\n"
     . "and comentarios.idusuario = usuario.idusuario\n"
-    . "ORDER BY `comentarios`.`horacomentario` ASC LIMIT 0, 30";
+    . "ORDER BY `comentarios`.`horacomentario` ASC ";
 	
   $cadenaComentarios = '';							   
 	$result = mysql_query($sqlcomentarios, $coneccion) or die(mysql_error());
@@ -70,20 +70,17 @@ $insertSQL = sprintf("INSERT INTO comentarios (idpublicacion, idusuario, conteni
   $cadenaComentarios = $cadenaComentarios.'
    									<li>
 										<div class="comment-wrap">
-											<img alt="avatar" src="img/dummies/avatar.jpg" class="avatar" />
+											<img alt="avatar" src="img/dummies/avatar.jpg" alt="avatar" width="51" height="51" class="avatar"/>
 											<div class="comments-right">
 												<div class="meta-date">'.$comentariosPublicacion['horacomentario'].'</div>
 												<div><a href="#" class="url"><strong>'.$shortName[0].' '.$shortName[1].'</strong></a></div>
 												<div class="brief"><p>'.$comentariosPublicacion['contenido'].'</p></div>
-												<p class="edit-comment"><a href="#">Edit</a></p>
 											</div>
 										</div>
 								  </li>  
 						';
 						
-					
-						
-						
+
   
   }//while...
   }//if 0 comentarios
@@ -96,28 +93,3 @@ $insertSQL = sprintf("INSERT INTO comentarios (idpublicacion, idusuario, conteni
 
   
 ?>
-
-<!--
-<form method="post" name="form1" action="">
-  <table align="center">
-    <tr valign="baseline">
-      <td nowrap align="right">Idpublicacion:</td>
-      <td><input type="text" name="idpublicacion" value="" size="32"></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap align="right">Idusuario:</td>
-      <td><input type="text" name="idusuario" value="" size="32"></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap align="right">Contenido:</td>
-      <td><input type="text" name="contenido" value="" size="32"></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap align="right">&nbsp;</td>
-      <td><input type="submit" value="Insertar registro"></td>
-    </tr>
-  </table>
-  <input type="hidden" name="MM_insert" value="form1">
-</form>
-<p>&nbsp;</p>
--->

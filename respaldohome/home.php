@@ -128,7 +128,7 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 						<li ><a href="blogs.php">BLOG</a></li>
 						<li><a href="staff.html">CUENTA <h>:<?php echo $_SESSION['idusuario'];?><></a>
 						<ul>
-								<li><a href="#">Configuracion</a></li>
+								<li><a href="editarCuenta.php">Configuracion</a></li>
 								<li><a href="index.php"> Salir</a></li>
 						</ul>
 						</li>

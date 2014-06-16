@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_lecturas" value="name:idlectura;datatype:int,name:idusuario;datatype:int,name:idlibro;datatype:int,name:inicio;datatype:date,name:fin;datatype:date" />
+	<infoitem key="UD_leidos" value="name:idlectura;datatype:int,name:idusuario;datatype:int,name:idlibro;datatype:int,name:inicio;datatype:date,name:fin;datatype:date" />
+</info>

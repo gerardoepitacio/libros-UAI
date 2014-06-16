@@ -1,6 +1,41 @@
-
-
+<?php require_once('Connections/coneccion.php'); ?>
 <?php
+session_start();
+ if(empty($_SESSION['idusuario'])) { 
+ header('Location: index.php');
+ } 
+ 
+
+$maxRows_usuario = 10;
+$pageNum_usuario = 0;
+if (isset($_GET['pageNum_usuario'])) {
+  $pageNum_usuario = $_GET['pageNum_usuario'];
+}
+$startRow_usuario = $pageNum_usuario * $maxRows_usuario;
+
+$colname_usuario = "-1";
+if (isset($_SESSION['idusuario'])) {
+  $colname_usuario = (get_magic_quotes_gpc()) ? $_SESSION['idusuario'] : addslashes($_SESSION['idusuario']);
+}
+mysql_select_db($database_coneccion, $coneccion);
+$query_usuario = sprintf("SELECT usuario.nombre,usuario.sexo,usuario.correo, usuario.facebook,
+								usuario.telefono,usuario.direccion, unidad.nombre as unidad 	
+								FROM usuario,unidad 
+								WHERE idusuario = %s 
+								and usuario.idunidad = unidad.idunidad", $colname_usuario);
+								
+$query_limit_usuario = sprintf("%s LIMIT %d, %d", $query_usuario, $startRow_usuario, $maxRows_usuario);
+$usuario = mysql_query($query_limit_usuario, $coneccion) or die(mysql_error());
+$row_usuario = mysql_fetch_assoc($usuario);
+
+if (isset($_GET['totalRows_usuario'])) {
+  $totalRows_usuario = $_GET['totalRows_usuario'];
+} else {
+  $all_usuario = mysql_query($query_usuario);
+  $totalRows_usuario = mysql_num_rows($all_usuario);
+}
+$totalPages_usuario = ceil($totalRows_usuario/$maxRows_usuario)-1;
+
 
 
 ?>
@@ -95,7 +130,7 @@
 					<ul id="nav" class="sf-menu">
 						<li ><a href="home.php">HOME</a>
 							<ul>
-								<li><a href="index-3d.html">algun item</a></li>
+								<li><a href="lecturas.php">algun item</a></li>
 							</ul>
 						</li>
 				
@@ -107,8 +142,8 @@
 						</li>
 						<li><a href="lecturas.php">MIS LECTURAS</a>
 						<ul>
-								<li><a href="index-3d.html">Actuales</a></li>
-								<li><a href="index-3d.html">Hechas</a></li>																
+								<li><a href="lecturas.php">Actuales</a></li>
+								<li><a href="lecturas.php">Hechas</a></li>																
 						</ul>
 						</li>
 						
@@ -121,9 +156,9 @@
 						
 						</li>
 						
-						<li><a href="staff.html">CUENTA</a></li>
+						<li><a href="about.php?idusuario="<?php echo $_SESSION['idusuario']?>">CUENTA</a></li>
 						<ul>
-								<li><a href="#">Configuracion</a></li>
+								<li><a href="editarCuenta.php">Configuracion</a></li>
 								<li><a href="index.php"> Salir</a></li>
 						</ul>
 						</li>
@@ -146,9 +181,8 @@
 				<div class="content">
 					<!-- title -->
 					<div class="title-holder">
-						<span class="title">STAFF</span>
-						<span class="subtitle">Pellentesque habitant morbi tristique senectus et netus et malesuada fames .</span>
-					</div>
+						<span class="title">Cuenta </span>
+						<span class="subtitle">Pell </span>					</div>
 					<!-- ENDS title -->
 					
 					<!-- page-content -->
@@ -157,22 +191,30 @@
 						<!-- staff -->
 					  <ul class="staff">
 						  <li>
-							  <img src="img/guy.png" alt="Pic" />
+						   <?php 
+									  if(strcasecmp($row_usuario['sexo'],'f') == 0 )
+									  echo '<img src="img/girl.png" alt="Pic" />'; 
+									  else
+									   echo '<img src="img/guy.png" alt="Pic" />';
+									  ?>
+						  
+							 
 							  <div class="information">
 								  <div class="header">
-									  <div class="name">JOHN DOE</div>
-									  <div class="contact">Web Designer / <a href="#">Website</a> / john@doe.com</div>
-								  </div>
-								  <div>
-									  <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p><p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+									  <div class="name"><?php echo $row_usuario['nombre']; ?></div>
+									  <div class="contact"><a href="<?php echo $row_usuario['facebook']; ?>">
+									  								<?php echo $row_usuario['facebook']; ?></a> </div>
+									<div class="contact">Correro: <?php echo $row_usuario['correo']; ?></div>
+									  <div class="contact">Direccion: <?php echo $row_usuario['direccion']; ?> </div>
+									  <div class="contact">Telefono: <?php echo $row_usuario['telefono']; ?> </div>
+									  <div class="contact"><?php echo $row_usuario['unidad']; ?>  </div>
 								  </div>
 							  </div>
 						  </li>
-					    <li>
-						    <!-- ENDS staff -->
-					</li>
+			             
+					  
 					  </ul>
-					</div>
+				  </div>
 					<!-- ENDS page-content -->
 
 				</div>
@@ -214,3 +256,6 @@
 	
 	</body>
 </html>
+<?php
+mysql_free_result($usuario);
+?>
