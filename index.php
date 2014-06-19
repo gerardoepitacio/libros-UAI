@@ -63,7 +63,7 @@ if (isset($_POST['Usuario'])) {
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	
-		<title>SIMPLE</title>
+		<title>Libros UAI</title>
 			
 		<!-- CSS -->
 		<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />

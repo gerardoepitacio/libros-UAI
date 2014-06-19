@@ -59,7 +59,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	
-		<title>SIMPLE</title>
+		<title>Libros UAI</title>
 			
 		<!-- CSS -->
 		<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />

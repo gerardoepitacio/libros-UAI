@@ -102,7 +102,6 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 						<li class="current_page_item"><a href="home.php">HOME</a>
 						</li>
 				
-
 						<li  ><a href="libros.php">MIS LIBROS</a>
 						<ul>
 								<li><a href="administracionLibros.php">Administrar</a></li>								
@@ -122,7 +121,7 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 						</ul>
 						</li>
 						
-						<li><a href="about.php?idusuario=<?php echo $_SESSION['idusuario'];?>">CUENTA <h></a>
+						<li><a href="about.php?idusuario=<?php echo $_SESSION['idusuario'];?>"> <?php echo $_SESSION['nombre'];?></a>
 						<ul>
 								<li><a href="editarCuenta.php">Configuracion</a></li>
 								<li><a href="index.php"> Salir</a></li>
@@ -153,8 +152,11 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 						  <div class="big">
 						    <p>Novedades</p>
 					      </div>
-							<div class="small">Post recientes </div>
+							<div class="small">
+							  <p>Post recientes </p>
+						    </div>
 						</div>
+						<br /><br />
 						<!-- news list -->
 						<ul class="news-list">
 							

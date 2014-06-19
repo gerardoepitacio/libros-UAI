@@ -60,7 +60,7 @@ echo 'este es un nuevo comentario';
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	
-		<title>SIMPLE</title>
+		<title>Libros UAI</title>
 			
 		<!-- CSS -->
 		<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
@@ -203,7 +203,7 @@ document.getElementById('contenido').value = "";
 								<li><a href="blogs.php">Administrar</a></li>																
 						</ul>
 						</li>
-						<li><a href="about.php?idusuario=<?php echo $_SESSION['idusuario'];?>">CUENTA <h></a>
+						<li><a href="about.php?idusuario=<?php echo $_SESSION['idusuario'];?>"> <?php echo $_SESSION['nombre'];?></a></a>
 						<ul>
 								<li><a href="editarCuenta.php">Configuracion</a></li>
 								<li><a href="index.php"> Salir</a></li>
@@ -327,7 +327,7 @@ document.getElementById('contenido').value = "";
 								<!--	<form  id="commentform"> -->
 										<fieldset>
 										<p>
-											  <textarea name="contenido" cols="80%" rows="10" wrap="physical" id="contenido" tabindex="4"></textarea>
+											  <textarea name="contenido" cols="80%" rows="10" wrap="off" id="contenido" tabindex="4"></textarea>
 										</p>
 											<p><input type="submit" name="submit" id="submit" tabindex="5" value="SEND" onclick="enviarComentario();"/></p>
 											<p><input type="hidden" name="commentID" value="true" /></p>

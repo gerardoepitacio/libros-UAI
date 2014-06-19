@@ -1,13 +1,10 @@
 <?php require_once('Connections/coneccion.php'); ?>
 <?php
 
-//Empezamos la sesión 
  session_start();
-
- //Si no hay una sesión creada, redireccionar al index. 
- if(empty($_SESSION['idusuario'])) { // Recuerda usar corchetes.
+ if(empty($_SESSION['idusuario'])) {
  header('Location: index.php');
- } // Recuerda usar corchetes
+ }
 
 
 mysql_select_db($database_coneccion, $coneccion);
@@ -34,26 +31,12 @@ $totalRows_librosUsuario = mysql_num_rows($librosUsuario);
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	
-		<title>SIMPLE</title>
+		<title>Libros UAI</title>
 			
 			
 		<!-- CSS -->
 		<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
-		<!--[if IE 6]>
-			<link rel="stylesheet" type="text/css" media="screen" href="css/ie-hacks.css" />
-			<script type="text/javascript" src="js/DD_belatedPNG.js"></script>
-			<script>
-	      		/* EXAMPLE */
-	      		DD_belatedPNG.fix('*');
-	    	</script>
-		<![endif]-->
-		<!--[if IE 7]>
-			<link rel="stylesheet" href="css/ie7-hacks.css" type="text/css" media="screen" />
-		<![endif]-->
-		<!--[if IE 8]>
-			<link rel="stylesheet" href="css/ie8-hacks.css" type="text/css" media="screen" />
-		<![endif]-->
-		<!-- ENDS CSS -->
+	
 		
 		<!-- prettyPhoto -->
 		<link rel="stylesheet" href="js/prettyPhoto/css/prettyPhoto.css" type="text/css" media="screen" />
@@ -140,7 +123,7 @@ $totalRows_librosUsuario = mysql_num_rows($librosUsuario);
 								<li><a href="blogs.php">Administrar</a></li>																
 						</ul>
 						</li>
-						<li><a href="about.php?idusuario=<?php echo $_SESSION['idusuario'];?>">CUENTA <h></a>
+						<li><a href="about.php?idusuario=<?php echo $_SESSION['idusuario'];?>"> <?php echo $_SESSION['nombre'];?></a>
 						<ul>
 								<li><a href="editarCuenta.php">Configuracion</a></li>
 								<li><a href="index.php"> Salir</a></li>
@@ -177,6 +160,11 @@ $totalRows_librosUsuario = mysql_num_rows($librosUsuario);
                         <!-- right -->
 <div class="one-half last"><br/>
           <!-- ENDS info boxes -->
+<?php 
+if($totalRows_librosUsuario != 0 )
+{
+?>		  
+		  
 <h4>Mis libritos</h4>
 							
 <table cellspacing="0" cellpadding="0" border="0">
@@ -206,10 +194,20 @@ $totalRows_librosUsuario = mysql_num_rows($librosUsuario);
 	  echo '<a href="detallePrestamo.php?idlibro='.$row_librosUsuario['idlibro'].'">prestado</a>'
 	  ?></td>
     </tr>
-    <?php } while ($row_librosUsuario = mysql_fetch_assoc($librosUsuario)); ?>
+    <?php } while ($row_librosUsuario = mysql_fetch_assoc($librosUsuario)); 
+	
+
+	?>
 	</tbody>
 </table>
+<?php 
+}else{
 
+echo '<h4>No tienes libros registrados!</h4>';
+echo '<br></br>';
+echo '<p><a href="agregarLibro.php" class="link-button"><span>Agregar un Nuevo Libro</span></a></p>';
+}
+?>
 
 <!-- ENDS table -->	
 		

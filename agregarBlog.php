@@ -1,7 +1,13 @@
 <?php require_once('Connections/coneccion.php'); ?>
 <?php
 
+session_start();
 
+ //Si no hay una sesión creada, redireccionar al index. 
+ if(empty($_SESSION['idusuario'])) { // Recuerda usar corchetes.
+ header('Location: index.php');
+ } // Recuerda usar corchetes
+ 
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
   $theValue = (!get_magic_quotes_gpc()) ? addslashes($theValue) : $theValue;
@@ -149,7 +155,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 						
 						</li>
 						
-						<li><a href="about.php?idusuario=<?php echo $_SESSION['idusuario'];?>">CUENTA <h></a>
+						<li><a href="about.php?idusuario=<?php echo $_SESSION['idusuario'];?>"> <?php echo $_SESSION['nombre'];?></a>
 						<ul>
 								<li><a href="editarCuenta.php">Configuracion</a></li>
 								<li><a href="index.php"> Salir</a></li>

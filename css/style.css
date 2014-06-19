@@ -198,6 +198,7 @@ img.shadow-img{
 	margin-top: 10px;
 	min-height: 600px;
 	line-height: 1.5em;
+	width: 800px;
 }
 
 .content p,
@@ -1227,7 +1228,7 @@ div.toggle-container .block p{
 .single-post{
 	margin-bottom: 20px;
 	overflow: hidden;
-	width: 700;
+	width: 800px;
 }
 
 #posts .post-header{

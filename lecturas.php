@@ -45,7 +45,6 @@ if (isset($_GET['pageNum_lecturas'])) {
 }
 $startRow_lecturas = $pageNum_lecturas * $maxRows_lecturas;
 
-//$_SESSION['idusuario']
 mysql_select_db($database_coneccion, $coneccion);
 $query_lecturas = "SELECT libro.titulo as titulo,  autor.nombre as autor, usuario.nombre as propietario, lectura.inicio, lectura.fin
 FROM lectura,libro,usuario,autor
@@ -71,7 +70,7 @@ $totalPages_lecturas = ceil($totalRows_lecturas/$maxRows_lecturas)-1;
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	
-		<title>SIMPLE</title>
+		<title>Libros UAI</title>
 			
 			
 		<!-- CSS -->
@@ -178,7 +177,7 @@ $totalPages_lecturas = ceil($totalRows_lecturas/$maxRows_lecturas)-1;
 						
 						</li>
 						
-						<li><a href="about.php?idusuario=<?php echo $_SESSION['idusuario'];?>">CUENTA <h></a>
+						<li><a href="about.php?idusuario=<?php echo $_SESSION['idusuario'];?>"> <?php echo $_SESSION['nombre'];?></a>
 						<ul>
 								<li><a href="editarCuenta.php">Configuracion</a></li>
 								<li><a href="index.php"> Salir</a></li>

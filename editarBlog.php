@@ -1,5 +1,12 @@
 <?php require_once('Connections/coneccion.php'); ?>
 <?php
+
+session_start();
+ if(empty($_SESSION['idusuario'])) { 
+ header('Location: index.php');
+ } 
+
+
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
   $theValue = (!get_magic_quotes_gpc()) ? addslashes($theValue) : $theValue;
@@ -155,7 +162,7 @@ $totalRows_datosBlog = mysql_num_rows($datosBlog);
 						
 						</li>
 						
-						<li><a href="about.php?idusuario=<?php echo $_SESSION['idusuario'];?>">CUENTA <h></a>
+						<li><a href="about.php?idusuario=<?php echo $_SESSION['idusuario'];?>"> <?php echo $_SESSION['nombre'];?></a>
 						<ul>
 								<li><a href="editarCuenta.php">Configuracion</a></li>
 								<li><a href="index.php"> Salir</a></li>

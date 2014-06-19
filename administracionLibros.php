@@ -136,7 +136,7 @@ $totalRows_librosUsuario = mysql_num_rows($librosUsuario);
 								<li><a href="blogs.php">Administrar</a></li>																
 						</ul>
 						</li>
-						<li><a href="about.php?idusuario=<?php echo $_SESSION['idusuario'];?>">CUENTA <h></a>
+						<li><a href="about.php?idusuario=<?php echo $_SESSION['idusuario'];?>"> <?php echo $_SESSION['nombre'];?></a>
 						<ul>
 								<li><a href="editarCuenta.php">Configuracion</a></li>
 								<li><a href="index.php"> Salir</a></li>
@@ -175,7 +175,11 @@ $totalRows_librosUsuario = mysql_num_rows($librosUsuario);
 						<!-- 2 cols -->
 						<div class="one-half">
 		
+<?php 
+if($totalRows_librosUsuario != 0)
+{
 
+?>
 <table width="150%" border="0" cellpadding="0" cellspacing="0">
 <tbody>
   <tr>
@@ -210,7 +214,13 @@ $totalRows_librosUsuario = mysql_num_rows($librosUsuario);
     <?php } while ($row_librosUsuario = mysql_fetch_assoc($librosUsuario)); ?>
 	</tbody>
 </table>
+<?php 
+}else{
+echo '<h4>No tienes libros registrados!</h4>';
+echo '<br></br>';
 
+}
+?>
 
 
 						</div>
