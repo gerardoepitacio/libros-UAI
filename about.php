@@ -136,8 +136,16 @@ $totalPages_usuario = ceil($totalRows_usuario/$maxRows_usuario)-1;
 								<li><a href="blogs.php">Administrar</a></li>																
 						</ul>
 						</li>
+						<?php 
 						
-						<li class="current_page_item"><a href="about.php?idusuario=<?php echo $_SESSION['idusuario'];?>"> <?php echo $_SESSION['nombre'];?></a>
+						if($_SESSION['idusuario'] != $colname_usuario)
+						echo '<li  ><a href="about.php?idusuario='.$_SESSION['idusuario'].'">'.$_SESSION['nombre'].'</a>';
+						else
+						echo '<li class="current_page_item" ><a href="about.php?idusuario='.$_SESSION['idusuario'].'">'.$_SESSION['nombre'].'</a>';
+						
+
+						?>
+						
 						<ul>
 								<li><a href="editarCuenta.php">Configuracion</a></li>
 								<li><a href="index.php"> Salir</a></li>
@@ -202,8 +210,8 @@ $totalPages_usuario = ceil($totalRows_usuario/$maxRows_usuario)-1;
 
 						<?php 
 						
-						//if($_SESSION['idusuario'] != $colname_usuario)
-						//{//si la solicitud de pagina web la hace un visitante.
+						if($_SESSION['idusuario'] != $colname_usuario)
+						{//si la solicitud de pagina web la hace un visitante.
 						?>
 						<!-- staff -->
 					  <ul class="staff">
@@ -250,7 +258,7 @@ $totalPages_usuario = ceil($totalRows_usuario/$maxRows_usuario)-1;
 									      <td><?php 
 	   
 										  if($row_librosUsuario['disponible'] == 1){
-										  echo '<p><a href="agregarNuevoUsuario.php" class="link-button"><span>Solicitar</span></a></p>';
+										  echo '<p><a href="#" class="link-button"><span>Solicitar</span></a></p>';
 										  }else
 										  echo 'No disponible'
 									  ?></td>
@@ -273,14 +281,16 @@ $totalPages_usuario = ceil($totalRows_usuario/$maxRows_usuario)-1;
 						  </li>  
 					  </ul>
 				  </div>
-
+				  <?php 
+				}
+				  ?>
 <!--CONTENEDOR LIBROS LEIDOS-->
 					<div class="page-content">
 
 						<?php 
 						
-						//if($_SESSION['idusuario'] != $colname_usuario)
-						//{//si la solicitud de pagina web la hace un visitante.
+						if($_SESSION['idusuario'] != $colname_usuario)
+						{//si la solicitud de pagina web la hace un visitante.
 						?>
 						<!-- staff -->
 					  <ul class="staff">
@@ -338,7 +348,7 @@ and fin IS NOT NULL
 										<?php 	
 											}else{
 
-										echo '<p>Este usuario no ha vivido mas vidas</p>';
+										echo '<p>Usuario reacio a vivir mas vidas... o es ingeniero</p>';
 											}
 											
 											?>
@@ -349,7 +359,9 @@ and fin IS NOT NULL
 				  </div>				  
 				  <!--FIN CONTENEDOR LIBROS LEIDOS-->
 
-				  <?php //}//END SOLICITUD VSITANTE?>
+				  <?php 
+				}//END SOLICITUD VSITANTE
+				?>
 					<!-- ENDS page-content -->
 
 				</div>
@@ -383,8 +395,7 @@ and fin IS NOT NULL
 		<div id="bottom">
 			<!-- wrapper -->
 			<!-- ENDS bottom-wrapper -->
-					
-			<p>hola!</p>
+
 			
 </div>
 		<!-- ENDS BOTTOM -->

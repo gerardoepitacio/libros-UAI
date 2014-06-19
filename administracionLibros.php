@@ -205,7 +205,7 @@ if($totalRows_librosUsuario != 0)
 	  if($row_librosUsuario['disponible'] == 1)
 	  echo 'disponible';
 	  else
-	  echo '<a href="detallePrestamo.php?idlibro='.$row_librosUsuario['idlibro'].'">prestado</a>'
+	  echo '<a href="detalleLibro.php?idlibro='.$row_librosUsuario['idlibro'].'">prestado</a>'
 	  ?>
 	  
 	  </td>

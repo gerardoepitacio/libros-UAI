@@ -70,7 +70,75 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
         <link rel="stylesheet" href="css/jquery.tabs-ie.css" type="text/css" media="projection, screen">
         <![endif]-->
   		<!-- ENDS tabs -->
+
+
+  		<!-- AJAX-->
+<script language="JavaScript" type="text/javascript"> 
+	var peticionAjax2 = null;
+	peticionAjax2 = new XMLHttpRequest();
+
+function evento(){
+	var valor = document.getElementById('s').value;
+	if(valor.length != 0){
+if(peticionAjax2) {
+
+var palabras="";
+var	textoAreaDividido = valor.split(" ");
+for (var ele in textoAreaDividido) {
+	palabras = palabras + textoAreaDividido[ele]+" "; 
+}
 		
+peticionAjax2.open('GET',"busqueda.php?valor="+palabras, true);
+//peticionAjax.open('GET', "agregarComentario.php?idpublicacion=, true);
+ peticionAjax2.onreadystatechange = estadoPeticion;
+ document.getElementById('resultados').value="";
+ peticionAjax2.send(null); //No le enviamos datos a la página
+
+ }//if peticion ajax true
+ else
+ 	alert("No se pudo obtener un objeto ajax");
+
+
+	}//if variable length
+	else{
+window.location="./home.php"
+document.getElementById('s').focus();
+	}
+}
+
+
+function estadoPeticion() {
+ switch(peticionAjax2.readyState) { //Según el estado de la petición devolvemos un Texto.
+  case 0:  //alert('sin iniciar');
+ break; 
+// case 1:  alert('cargando');
+ break; 
+ case 2:  
+ //alert('cargando');
+ break; 
+ //case 3:  alert('interactivo');
+ break; 
+ case 4: 
+ //Si ya hemos completado la petición, devolvemos además la información. 
+ document.getElementById('resultados').innerHTML=peticionAjax2.responseText; 
+ break; 
+ } 
+
+ }//function 
+
+
+function clearText(){
+	document.getElementById('s').value = "";
+}
+
+function defaultText(){
+
+document.getElementById('s').value = "Search...";	
+}
+
+
+</script> 
+
 	</head>	
 	
 	<body>
@@ -81,13 +149,16 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 			<!-- wrapper -->
 			<div class="wrapper">
 				<a href="home.php"><img src="img/logo.png" alt="Logo" id="logo" /></a>
-		
-				
 				
 				<div class="top-search">
 					<form  method="get" id="searchform" action="">
-						<div>
-							<input type="text" value="Search..." name="s" id="s" onfocus="defaultInput(this)" onblur="clearInput(this)" />
+						<div >
+						<div id = "preResultados">
+							<datalist id="lista">
+							</datalist>
+							
+						</div>
+							<input type="text" value="Search..." name="s" id="s" onfocus="clearText()" list = "lista"  onKeyUp="evento()"/>
 							<input type="submit" id="searchsubmit" value=" " />
 						</div>
 					</form>
@@ -132,7 +203,7 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 				<!-- ENDS navigation -->
 			
 			
-			</div>
+		  </div>
 			<!-- ENDS HEADER-wrapper -->
 		</div>
 		</div>
@@ -147,9 +218,15 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 					<div class="headline">Bienvenid@ <?php echo $_SESSION['nombre'];?></div>
 					<!-- ENDS headline -->
 					<div class="shadow-divider"></div>
+
+					
+					<!-- LEFT COL -->
 					<div class="front-left-col">
+						<!-- INICIO RESULTADOS-->
+					<div id = "resultados">
 						<div class="bullet-title">
 						  <div class="big">
+
 						    <p>Novedades</p>
 					      </div>
 							<div class="small">
@@ -157,6 +234,7 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 						    </div>
 						</div>
 						<br /><br />
+
 						<!-- news list -->
 						<ul class="news-list">
 							
@@ -180,7 +258,7 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 						  
 				            <div class="news-brief">
 					         <p style="text-align:justify"> <?php echo  nl2br(substr($row_publicacion['contenido'],0,100))."<h1>. . .<h1>"; ?></p>						    
-							  </div>
+						    </div>
 							  
 						    <div class="news-date">
 						      <?php 
@@ -196,7 +274,7 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 									  
 							  ?>
 							 
-							   </div>
+						    </div>
 						  </li>
 							<?php 
 							} while ($row_publicacion = mysql_fetch_assoc($publicaciones)); 
@@ -208,6 +286,11 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 						<p><a href="#" class="link-button right"><span>MORE POSTS</span></a></p>
 					</div>
 					<!-- ENDS front-left-col -->
+
+
+				</div>
+				<!-- END RESULTADOS-->
+
 					
 					<!-- front-right-col-->
 			  <div class="front-right-col">
@@ -221,7 +304,7 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 							<li class="block"><a href="about.html" ></a> </li>
 						  <li class="block"><a href="about.html" ></a> </li>
 						</ul>
-					</div>
+			  </div>
 					<!-- ENDS front-left-col -->
 		  </div>
 				<!-- ENDS home-content -->
@@ -231,7 +314,7 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 				<!-- twitter -->
 				<div class="twitter-reader">
 					<script>Chirp({user:"ansimuz",max:1})</script></div>
-		  </div>
+    </div>
 				<!-- ENDS twitter -->
 				
 				
@@ -243,17 +326,9 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 		<!-- ENDS MAIN -->	
 		
 		<!-- FOOTER -->
-		<div id="footer">
-		<div class="degree">
-			<!-- wrapper -->
-			<!-- ENDS footer-wrapper -->
-</div>
-		</div>
 		<!-- ENDS FOOTER -->
-
-
-		<!-- start cufon -->
-		<script type="text/javascript"> Cufon.now(); </script>
+        <!-- start cufon -->
+<script type="text/javascript"> Cufon.now(); </script>
 		<!-- ENDS start cufon -->
 	
 	</body>

@@ -28,6 +28,7 @@ $query_limit_leidos = sprintf("%s LIMIT %d, %d", $query_leidos, $startRow_leidos
 $leidos = mysql_query($query_limit_leidos, $coneccion) or die(mysql_error());
 $row_leidos = mysql_fetch_assoc($leidos);
 
+
 if (isset($_GET['totalRows_leidos'])) {
   $totalRows_leidos = $_GET['totalRows_leidos'];
 } else {
@@ -213,11 +214,20 @@ $totalPages_lecturas = ceil($totalRows_lecturas/$maxRows_lecturas)-1;
                                     <td><?php echo $row_lecturas['autor']; ?></td>
                                     <td><?php echo $row_lecturas['propietario']; ?></td>
                                     <td><?php echo $row_lecturas['inicio']; ?></td>
-                                    <td>-----------</td>
+                                    <td><?php 
+                                    	if($totalRows_lecturas != 0)
+                                    		 echo '-----';
+                                    	?>
+                                    </td>
 									<td>
-									<a href="agregarBlog.php?idlectura=<?php 
-									echo $row_lecturas['idlectura'].'&titulo='.$row_lecturas['titulo'].'&autor='.$row_lecturas['autor'].
-									'&inicio='.$row_lecturas['inicio'];?>">Nueva entrada</a></td>
+										<?php if($totalRows_lecturas != 0)
+										echo '<a href="agregarBlog.php?idlectura='.$row_lecturas['idlectura'].
+																		'&titulo='.$row_lecturas['titulo'].
+																		'&autor='.$row_lecturas['autor'].
+																		'&inicio='.$row_lecturas['inicio'].
+																		'">Nueva entrada</a>';
+										?>
+									</td>
                                   </tr>
                                   <?php } while ($row_lecturas = mysql_fetch_assoc($lecturas)); ?>
 								</tbody>
@@ -247,9 +257,17 @@ $totalPages_lecturas = ceil($totalRows_lecturas/$maxRows_lecturas)-1;
                                     <td><?php echo $row_leidos['inicio']; ?></td>
                                     <td><?php echo $row_leidos['fin']; ?></td>
 									<td>
-									<a href="agregarBlog.php?idlectura=<?php 
-									echo $row_leidos['idlectura'].'&titulo='.$row_leidos['titulo'].'&autor='.$row_leidos['autor'].
-									'&inicio='.$row_leidos['inicio'];?>">Nueva entrada</a></td>
+										<?php 
+										if($row_leidos!= 0)
+										echo '<a href="agregarBlog.php?idlectura='.$row_leidos['idlectura'].
+																		'&titulo='.$row_leidos['titulo'].
+																		'&autor='.$row_leidos['autor'].
+																		'&inicio='.$row_leidos['inicio'].		
+																		'">Nueva entrada</a>';
+										?>
+									</td>
+
+
                                       </tr>
                                       <?php } while ($row_leidos = mysql_fetch_assoc($leidos)); ?>
 									  </tbody>

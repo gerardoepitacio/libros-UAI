@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_detalleLibro" value="name:idlibro;datatype:int,name:estado;datatype:int,name:idautor;datatype:int,name:idpropietario;datatype:int,name:ideditorial;datatype:int,name:publicacion;datatype:date,name:disponible;datatype:int,name:titulo;datatype:string" />
+</info>
