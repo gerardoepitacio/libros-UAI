@@ -142,16 +142,11 @@ $totalPages_usuario = ceil($totalRows_usuario/$maxRows_usuario)-1;
 								<li><a href="lecturas.php">Actuales</a></li>
 								<li><a href="lecturas.php">Hechas</a></li>																
 						</ul>
-						</li>
-						
-						<li class="current_page_item"><a href="blogs.php">BLOG</a>
+						</li><li class="current_page_item"><a href="blogs.php">BLOG</a>
 						<ul>
-								<li><a href="agregarBlog.php">Nuevo</a></li>
+								<li><a href="lecturas.php">Nuevo</a></li>
 								<li><a href="blogs.php">Administrar</a></li>																
-						</ul>
-						
-						
-						</li>
+						</ul></li>
 						
 						<li><a href="about.php?idusuario=<?php echo $_SESSION['idusuario'];?>"> <?php echo $_SESSION['nombre'];?></a>
 						<ul>

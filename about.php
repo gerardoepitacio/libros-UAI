@@ -130,9 +130,9 @@ $totalPages_usuario = ceil($totalRows_usuario/$maxRows_usuario)-1;
 						</ul>
 						</li>
 						
-						<li><a href="blogs.php">BLOG</a>
+						<li ><a href="blogs.php">BLOG</a>
 						<ul>
-								<li><a href="agregarBlog.php">Nuevo</a></li>
+								<li><a href="lecturas.php">Nuevo</a></li>
 								<li><a href="blogs.php">Administrar</a></li>																
 						</ul>
 						</li>
@@ -159,13 +159,12 @@ $totalPages_usuario = ceil($totalRows_usuario/$maxRows_usuario)-1;
 		<!-- MAIN -->
 		<div id="main">
 			<!-- wrapper -->
-			<div class="wrapper">
+		  <div class="wrapper">
 				<!-- content -->
 				<div class="content">
 					<!-- title -->
 					<div class="title-holder">
-						<span class="title">Cuenta: </span>
-						<span class="subtitle"><?php echo $_SESSION['nombre']?> </span>					</div>
+						<span class="title">Detalle de la cuenta </span></div>
 					<!-- ENDS title -->
 					
 					<!-- page-content -->
@@ -198,16 +197,169 @@ $totalPages_usuario = ceil($totalRows_usuario/$maxRows_usuario)-1;
 					  
 					  </ul>
 				  </div>
+				  
+				   <div class="page-content">
+
+						<?php 
+						
+						//if($_SESSION['idusuario'] != $colname_usuario)
+						//{//si la solicitud de pagina web la hace un visitante.
+						?>
+						<!-- staff -->
+					  <ul class="staff">
+						  <li>							 
+							  <div class="information">
+								  <div class="header">
+									  <div class="name">Libros Registrados</div>
+									  <?php 
+									  	  
+										mysql_select_db($database_coneccion, $coneccion);
+										$query_librosUsuario = "SELECT idlibro, estado,autor.nombre as autor, 
+										editorial.nombre as editorial,
+										publicacion, disponible, titulo
+										FROM libro,autor,editorial 
+										where idpropietario = ". $colname_usuario."
+										and   libro.idautor = autor.idautor
+										and   libro.ideditorial = editorial.ideditorial";
+
+
+									$librosUsuario = mysql_query($query_librosUsuario, $coneccion) or die(mysql_error());
+									$row_librosUsuario = mysql_fetch_assoc($librosUsuario);
+									$totalRows_librosUsuario = mysql_num_rows($librosUsuario);
+									  
+									  
+										if($totalRows_librosUsuario != 0 )
+											{
+									?>		  
+									
+										<table cellspacing="0" cellpadding="0" border="0">
+											<tbody>
+											  <tr>
+											    <th>estado</th>
+											    <th>autor</th>
+											    <th>titulo</th>
+											    <th>editorial</th>
+											    <th>Disponibilidad</th>
+											  </tr>
+									  <?php do { ?>
+									    <tr>
+									      <td><?php echo $row_librosUsuario['estado']; ?></td>
+									      <td><?php echo $row_librosUsuario['autor']; ?></td>
+									      <td><?php echo $row_librosUsuario['titulo']; ?></td>
+									      <td><?php echo $row_librosUsuario['editorial']; ?></td>
+									      <td><?php 
+	   
+										  if($row_librosUsuario['disponible'] == 1){
+										  echo '<p><a href="agregarNuevoUsuario.php" class="link-button"><span>Solicitar</span></a></p>';
+										  }else
+										  echo 'No disponible'
+									  ?></td>
+								      </tr>
+									    <?php } while ($row_librosUsuario = mysql_fetch_assoc($librosUsuario)); 
+	
+
+										?>
+											</tbody>
+									</table>
+										<?php 	
+											}else{
+
+										echo '<p>Sin registros<p>';
+											}
+											
+											?>
+								  </div>
+							  </div>
+						  </li>  
+					  </ul>
+				  </div>
+
+<!--CONTENEDOR LIBROS LEIDOS-->
+					<div class="page-content">
+
+						<?php 
+						
+						//if($_SESSION['idusuario'] != $colname_usuario)
+						//{//si la solicitud de pagina web la hace un visitante.
+						?>
+						<!-- staff -->
+					  <ul class="staff">
+						  <li>							 
+							  <div class="information">
+								  <div class="header">
+									  <div class="name">LIBROS LEIDOS</div>
+									  <?php 
+
+
+										mysql_select_db($database_coneccion, $coneccion);
+
+$query_leidos = "SELECT lectura.idlectura,libro.titulo as titulo,  autor.nombre as autor, usuario.nombre as propietario, lectura.inicio, lectura.fin
+FROM lectura,libro,usuario,autor
+WHERE lectura.idusuario = ".$colname_usuario."
+and lectura.idlibro = libro.idlibro
+and libro.idautor = autor.idautor
+and libro.idpropietario = usuario.idusuario
+and fin IS NOT NULL
+";
+
+									$librosLeidos = mysql_query($query_leidos, $coneccion) or die(mysql_error());
+									$row_libroLeido = mysql_fetch_assoc($librosLeidos);
+									$totalRows_librosLeidos = mysql_num_rows($librosLeidos);
+									  
+									  
+										if($totalRows_librosLeidos != 0 )
+											{
+									?>		  
+									
+										<table cellspacing="0" cellpadding="0" border="0">
+											<tbody>
+											  <tr>
+											    <th>titulo</th>
+											    <th>autor</th>
+											    <th>inicio</th>
+											    <th>fin</th>
+											  </tr>
+									  <?php do { ?>
+									    <tr>
+									      <td><?php echo $row_libroLeido['titulo']; ?></td>
+									      <td><?php echo $row_libroLeido['autor']; ?></td>
+									      <td><?php echo $row_libroLeido['inicio']; ?></td>
+									      <td><?php echo $row_libroLeido['fin']; ?></td>
+									      <td><?php 
+									  ?>
+									</td>
+								      </tr>
+									    <?php } while ($row_libroLeido = mysql_fetch_assoc($librosLeidos)); 
+	
+
+										?>
+											</tbody>
+									</table>
+										<?php 	
+											}else{
+
+										echo '<p>Este usuario no ha vivido mas vidas</p>';
+											}
+											
+											?>
+								  </div>
+							  </div>
+						  </li>  
+					  </ul>
+				  </div>				  
+				  <!--FIN CONTENEDOR LIBROS LEIDOS-->
+
+				  <?php //}//END SOLICITUD VSITANTE?>
 					<!-- ENDS page-content -->
 
 				</div>
-				<!-- ENDS content -->
 				
-				<!-- twitter -->
-				<div class="twitter-reader">
-					<script>Chirp({user:"ansimuz",max:1})</script></div>
-		  </div>
-				<!-- ENDS twitter -->
+				
+			  <!-- ENDS content -->
+				
+			  <!-- twitter -->
+			</div>
+			<!-- ENDS twitter -->
 				
 	</div>
 			<!-- ENDS main-wrapper -->
@@ -221,6 +373,7 @@ $totalPages_usuario = ceil($totalRows_usuario/$maxRows_usuario)-1;
 		<div class="degree">
 			<!-- wrapper -->
 			<!-- ENDS footer-wrapper -->
+	
 </div>
 		</div>
 		<!-- ENDS FOOTER -->
@@ -230,6 +383,9 @@ $totalPages_usuario = ceil($totalRows_usuario/$maxRows_usuario)-1;
 		<div id="bottom">
 			<!-- wrapper -->
 			<!-- ENDS bottom-wrapper -->
+					
+			<p>hola!</p>
+			
 </div>
 		<!-- ENDS BOTTOM -->
 

@@ -127,16 +127,11 @@ $totalRows_librosUsuario = mysql_num_rows($publicaciones);
 								<li><a href="lecturas.php">Actuales</a></li>
 								<li><a href="lecturas.php">Hechas</a></li>																
 						</ul>
-						</li>
-						
-						<li class="current_page_item"><a href="blogs.php">BLOG</a>
+						</li><li class="current_page_item"><a href="blogs.php">BLOG</a>
 						<ul>
-								<li><a href="agregarBlog.php">Nuevo</a></li>
+								<li><a href="lecturas.php">Nuevo</a></li>
 								<li><a href="blogs.php">Administrar</a></li>																
-						</ul>
-						
-						
-						</li>
+						</ul></li>
 						
 						<li><a href="about.php?idusuario=<?php echo $_SESSION['idusuario'];?>"> <?php echo $_SESSION['nombre'];?></a>
 						<ul>
@@ -256,7 +251,7 @@ else{
 							<li>
 								<h2 class="custom"><span>CATEGORIES</span></h2>		
 								<ul>
-									<li class="cat-item"><a href="agregarBlog.php" title="Escribe un nuevo blog!">Nuevo</a></li>
+									<li class="cat-item"><a href="lecturas.php" title="Escribe un nuevo blog!">Nuevo</a></li>
 								</ul>
 							</li>	
 							<!-- ENDS init sidebar -->

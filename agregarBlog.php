@@ -145,15 +145,11 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 								<li><a href="lecturas.php">Actuales</a></li>
 								<li><a href="lecturas.php">Hechas</a></li>																
 						</ul>
-						</li>
-						
-						<li class="current_page_item"><a href="blogs.php">BLOG</a>
+						</li><li class="current_page_item"><a href="blogs.php">BLOG</a>
 						<ul>
-								<li><a href="agregarBlog.php">Nuevo</a></li>
+								<li><a href="lecturas.php">Nuevo</a></li>
 								<li><a href="blogs.php">Administrar</a></li>																
-						</ul>
-						
-						</li>
+						</ul></li>
 						
 						<li><a href="about.php?idusuario=<?php echo $_SESSION['idusuario'];?>"> <?php echo $_SESSION['nombre'];?></a>
 						<ul>
@@ -180,25 +176,25 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 
 <form method="post" name="form1" action="<?php echo $editFormAction; ?>">
   <table width="788" height="200" align="center">
-    <tr valign="baseline">
-      <td nowrap align="right">Idlectura:</td>
-      <td><input type="text" name="idlectura" value="" size="100"></td>
+   <tr valign="baseline">
+      <td>Libro: <?php echo $_GET['titulo']?></td>
+    </tr>
+	<tr valign="baseline">
+    <td>Autor: <?php echo $_GET['autor']?></td>
+    </tr>
+	<tr valign="baseline">
+      <td><input type="text" name="titulo" value="" size="100" placeholder="Titulo del blog"></td>
     </tr>
     <tr valign="baseline">
-      <td nowrap align="right">Titulo:</td>
-      <td><input type="text" name="titulo" value="" size="100"></td>
+      <td><textarea name="contenido" cols="80" rows="40"></textarea></td>
     </tr>
     <tr valign="baseline">
-      <td nowrap align="right" valign="top">Contenido:</td>
-      <td><textarea name="contenido" cols="80" rows="40"></textarea>
-      </td>
-    </tr>
-    <tr valign="baseline">
-      <td height="28" align="right" nowrap>&nbsp;</td>
-      <td><input type="submit" value="Insertar registro"></td>
+      <td height="28" align="center" nowrap><input name="submit" type="submit" value="PUBLICAR" /></td>
     </tr>
   </table>
+  <input type="hidden" name="idlectura" value="<?php echo $_GET['idlectura']?>" size="100">
   <input type="hidden" name="MM_insert" value="form1">
+  
 </form>
 <p>&nbsp;</p>
 

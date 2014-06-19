@@ -147,7 +147,7 @@ $totalRows_registroLibros = mysql_num_rows($registroLibros);
 						
 						<li ><a href="blogs.php">BLOG</a>
 						<ul>
-								<li><a href="agregarBlog.php">Nuevo</a></li>
+								<li><a href="lecturas.php">Nuevo</a></li>
 								<li><a href="blogs.php">Administrar</a></li>																
 						</ul>
 						</li>

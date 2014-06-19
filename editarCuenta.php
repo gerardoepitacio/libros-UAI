@@ -176,7 +176,7 @@ $totalRows_infousuario = mysql_num_rows($infousuario);
 						
 						<li ><a href="blogs.php">BLOG</a>
 						<ul>
-								<li><a href="agregarBlog.php">Nuevo</a></li>
+								<li><a href="lecturas.php">Nuevo</a></li>
 								<li><a href="blogs.php">Administrar</a></li>																
 						</ul>
 						

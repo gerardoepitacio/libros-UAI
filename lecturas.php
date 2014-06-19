@@ -14,9 +14,7 @@ if (isset($_GET['pageNum_leidos'])) {
 $startRow_leidos = $pageNum_leidos * $maxRows_leidos;
 
 mysql_select_db($database_coneccion, $coneccion);
-//$query_leidos = "SELECT * FROM lectura";
-
-$query_leidos = "SELECT libro.titulo as titulo,  autor.nombre as autor, usuario.nombre as propietario, lectura.inicio, lectura.fin
+$query_leidos = "SELECT lectura.idlectura,libro.titulo as titulo,  autor.nombre as autor, usuario.nombre as propietario, lectura.inicio, lectura.fin
 FROM lectura,libro,usuario,autor
 WHERE lectura.idusuario = ".$_SESSION['idusuario']."
 and lectura.idlibro = libro.idlibro
@@ -46,7 +44,7 @@ if (isset($_GET['pageNum_lecturas'])) {
 $startRow_lecturas = $pageNum_lecturas * $maxRows_lecturas;
 
 mysql_select_db($database_coneccion, $coneccion);
-$query_lecturas = "SELECT libro.titulo as titulo,  autor.nombre as autor, usuario.nombre as propietario, lectura.inicio, lectura.fin
+$query_lecturas = "SELECT lectura.idlectura,libro.titulo as titulo,  autor.nombre as autor, usuario.nombre as propietario, lectura.inicio, lectura.fin
 FROM lectura,libro,usuario,autor
 WHERE lectura.idusuario = ".$_SESSION['idusuario']."
 and lectura.idlibro = libro.idlibro
@@ -65,7 +63,9 @@ if (isset($_GET['totalRows_lecturas'])) {
   $totalRows_lecturas = mysql_num_rows($all_lecturas);
 }
 $totalPages_lecturas = ceil($totalRows_lecturas/$maxRows_lecturas)-1;
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">  
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -75,21 +75,6 @@ $totalPages_lecturas = ceil($totalRows_lecturas/$maxRows_lecturas)-1;
 			
 		<!-- CSS -->
 		<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
-		<!--[if IE 6]>
-			<link rel="stylesheet" type="text/css" media="screen" href="css/ie-hacks.css" />
-			<script type="text/javascript" src="js/DD_belatedPNG.js"></script>
-			<script>
-	      		/* EXAMPLE */
-	      		DD_belatedPNG.fix('*');
-	    	</script>
-		<![endif]-->
-		<!--[if IE 7]>
-			<link rel="stylesheet" href="css/ie7-hacks.css" type="text/css" media="screen" />
-		<![endif]-->
-		<!--[if IE 8]>
-			<link rel="stylesheet" href="css/ie8-hacks.css" type="text/css" media="screen" />
-		<![endif]-->
-		<!-- ENDS CSS -->
 		
 		<!-- prettyPhoto -->
 		<link rel="stylesheet" href="js/prettyPhoto/css/prettyPhoto.css" type="text/css" media="screen" />
@@ -170,7 +155,7 @@ $totalPages_lecturas = ceil($totalRows_lecturas/$maxRows_lecturas)-1;
 						
 						<li ><a href="blogs.php">BLOG</a>
 						<ul>
-								<li><a href="agregarBlog.php">Nuevo</a></li>
+								<li><a href="lecturas.php">Nuevo</a></li>
 								<li><a href="blogs.php">Administrar</a></li>																
 						</ul>
 						
@@ -209,7 +194,7 @@ $totalPages_lecturas = ceil($totalRows_lecturas/$maxRows_lecturas)-1;
 					<div class="page-content">
 						
 							<!-- accordions -->
-							<h5 class="accordion-trigger custom"><a href="#"> HACIENDO </a></h5>
+							<h5 class="accordion-trigger custom"><a href="#"> LEYENDO </a></h5>
 							<div class="accordion-container">
 							<div class="block">
                               <table cellspacing="0" cellpadding="0" border="0">
@@ -220,6 +205,7 @@ $totalPages_lecturas = ceil($totalRows_lecturas/$maxRows_lecturas)-1;
                                   <th>Propietario</th>
 								  <th>Inicio</th>
                                   <th>Fin</th>
+								   <th>Blog</th>
                                 </tr>
                                 <?php do { ?>
                                   <tr>
@@ -228,6 +214,10 @@ $totalPages_lecturas = ceil($totalRows_lecturas/$maxRows_lecturas)-1;
                                     <td><?php echo $row_lecturas['propietario']; ?></td>
                                     <td><?php echo $row_lecturas['inicio']; ?></td>
                                     <td>-----------</td>
+									<td>
+									<a href="agregarBlog.php?idlectura=<?php 
+									echo $row_lecturas['idlectura'].'&titulo='.$row_lecturas['titulo'].'&autor='.$row_lecturas['autor'].
+									'&inicio='.$row_lecturas['inicio'];?>">Nueva entrada</a></td>
                                   </tr>
                                   <?php } while ($row_lecturas = mysql_fetch_assoc($lecturas)); ?>
 								</tbody>
@@ -235,7 +225,7 @@ $totalPages_lecturas = ceil($totalRows_lecturas/$maxRows_lecturas)-1;
 							  </div>
 								
 					  </div>
-							<h5 class="accordion-trigger custom"><a href="#">REALIZADAS </a></h5>
+							<h5 class="accordion-trigger custom"><a href="#">HECHAS </a></h5>
 							<div class="accordion-container">
 							    
 								<div class="block">
@@ -247,6 +237,7 @@ $totalPages_lecturas = ceil($totalRows_lecturas/$maxRows_lecturas)-1;
                                   <th>Propietario</th>
 								  <th>Inicio</th>
                                   <th>Fin</th>
+								  <th>Blog</th>
                                     </tr>
                                     <?php do { ?>
                                       <tr>
@@ -255,6 +246,10 @@ $totalPages_lecturas = ceil($totalRows_lecturas/$maxRows_lecturas)-1;
                                     <td><?php echo $row_leidos['propietario']; ?></td>
                                     <td><?php echo $row_leidos['inicio']; ?></td>
                                     <td><?php echo $row_leidos['fin']; ?></td>
+									<td>
+									<a href="agregarBlog.php?idlectura=<?php 
+									echo $row_leidos['idlectura'].'&titulo='.$row_leidos['titulo'].'&autor='.$row_leidos['autor'].
+									'&inicio='.$row_leidos['inicio'];?>">Nueva entrada</a></td>
                                       </tr>
                                       <?php } while ($row_leidos = mysql_fetch_assoc($leidos)); ?>
 									  </tbody>
