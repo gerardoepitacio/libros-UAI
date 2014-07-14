@@ -64,6 +64,7 @@ CREATE TABLE IF NOT EXISTS `comentarios` (
   KEY `idx_comentarios_0` (`idpublicacion`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=167 ;
 
+
 --
 -- Volcado de datos para la tabla `comentarios`
 --
